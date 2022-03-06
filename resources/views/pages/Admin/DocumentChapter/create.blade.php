@@ -30,11 +30,13 @@
                         @enderror
                     </div>
                     <div class="col">
-                        <label for="id_chapter_title">Chapter Name (Indonesia)</label>
-                        <input type="text" autocomplete="off" class="form-control @error('id_chapter_title') is-invalid
-                        @enderror" id="id_chapter_title" name="id_chapter_title" value="{{old('id_chapter_title')}}"
-                            readonly>
-                        @error('id_chapter_title')
+                        <label for="number_words"> <a
+                                href="https://www.chineseconverter.com/en/convert/chinese-character-count"
+                                target="_blank"> Total
+                                Characters</a></label>
+                        <input type="number" autocomplete="off" class="form-control @error('number_words') is-invalid
+                        @enderror" id="number_words" name="number_words" value="{{old('number_words')}}">
+                        @error('number_words')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
@@ -44,35 +46,22 @@
             </div>
 
             <div class="form-group">
-                <div class="form-row">
-                    <div class="col">
-                        <label for="ch_text">Chinese Text</label>
-                        <br>
-                        <label style="color: blue">Total : 1000 words</label>
-                        <textarea class="form-control @error('ch_text') is-invalid @enderror" name="ch_text"
-                            id="ch_text" rows="50"></textarea>
-                        @error('ch_text')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="col">
-                        <label for="id_text">Indonesia Text</label>
-                        <br>
-                        <label style="color: blue">Total : 0 words</label>
-                        <textarea class="form-control" name="id_text" id="id_text" rows="50" readonly></textarea>
-                        @error('id_text')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
+                <label for="ch_text">Chinese Text</label>
+                <br>
+                {{-- <label style="color: blue">Total : <span id="wordCount">0</span> words</label> --}}
+                <textarea {{-- onkeyup="countMandarinWords()" --}}
+                    class="form-control @error('ch_text') is-invalid @enderror" name="ch_text" id="ch_text"
+                    rows="50">{{old('ch_text')}}</textarea>
+                @error('ch_text')
+                <div class="invalid-feedback">
+                    {{ $message }}
                 </div>
+                @enderror
+            </div>
 
-                <hr>
+            <hr>
 
-                <button type="submit" class="btn btn-block btn-sm btn-primary">Save</button>
+            <button type="submit" class="btn btn-block btn-sm btn-primary">Save</button>
         </form>
     </div>
 

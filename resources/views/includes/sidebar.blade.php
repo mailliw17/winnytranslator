@@ -39,6 +39,17 @@
         <span data-feather="plus-circle"></span>
       </a>
     </h6>
+
+    <ul class="nav flex-column mb-2">
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('task-translator.index')}}">
+          <span data-feather="file-text"></span>
+          <i class="bi bi-list-task"></i>
+          My Task
+        </a>
+      </li>
+    </ul>
+
     <ul class="nav flex-column mb-2">
       <li class="nav-item">
         <a class="nav-link" href="{{ route('account-translator.index')}}">
@@ -48,6 +59,7 @@
         </a>
       </li>
     </ul>
+
     @endif
 
   </div>

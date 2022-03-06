@@ -21,16 +21,22 @@ Route::get('/document-chapters/{id}', 'DocumentChapterController@manageChapters'
 Route::get('/user/{id}/forgot-password', 'AuthController@showChangePasswordForm')->name('forgot-password');
 Route::get('/document-chapters/{id}/add-chapter', 'DocumentChapterController@addChapter')->name('document-chapters.add-chapter');
 Route::get('/document-chapters/{id}/note', 'DocumentChapterController@manageNote')->name('document-chapters.note');
+Route::get('/document-chapters/{id}/check', 'DocumentChapterController@check')->name('document-chapters.check');
 
 // PUT
 Route::put('/user/{id}/forgot-password', 'AuthController@updatePassword')->name('update-password');
 Route::put('/document-chapters/{id}/note', 'DocumentChapterController@updateNote')->name('document-chapters.note');
+Route::put('/task-translator/{id}/update-status-submit', 'TaskTranslatorController@updateStatusSubmit')->name('task-translator.updateStatusSubmit');
+Route::put('/document-chapters/{id}/accept', 'DocumentChapterController@acceptDocumentChapter')->name('document-chapters.accept');
+Route::put('/document-chapters/{id}/revision', 'DocumentChapterController@revisionDocumentChapter')->name('document-chapters.revision');
+
 
 // POST
 Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@authenticate');
 Route::post('/logout', 'AuthController@logout')->name('logout');
 
+Route::resource('task-translator', 'TaskTranslatorController');
 Route::resource('payment-translator', 'PaymentTranslatorController');
 Route::resource('account-translator', 'AccountTranslatorController');
 Route::resource('document-chapters', 'DocumentChapterController');

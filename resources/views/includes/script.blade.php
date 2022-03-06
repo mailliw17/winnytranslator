@@ -12,4 +12,16 @@
     $(document).ready( function () {
           $('.myTable').DataTable();
       } );
+
+    // function to count mandarin word
+    // still error
+      function countMandarinWords() {
+        const textField = document.getElementById("ch_text");
+        const wordCount = document.getElementById("wordCount");
+
+        let text = textField.value;
+        text= text.trim();
+        const words = text.split(" ");
+        wordCount.innerText = words.length;
+      }
 </script>

@@ -23,10 +23,13 @@
                     <h5 class="card-title"><i class="bi bi-card-heading"></i> Document Title : {{$doc[0]->ch_title}}
                     </h5>
 
+                    @if (auth()->user()->role == 1)
                     <div class="text-right">
                         <a href="{{ route('document-chapters.note', $doc[0]->id)}}" class="btn btn-warning"><i
                                 class="bi bi-journal-bookmark-fill"></i> Manage Note</a>
                     </div>
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -39,10 +42,13 @@
                             @endif
                     </h5>
 
+                    @if (auth()->user()->role == 1)
                     <div class="text-right">
                         <a href="{{ route('document-chapters.add-chapter', $doc[0]->id)}}" class="btn btn-primary"><i
                                 class="bi bi-plus-square-dotted"></i> Add Chapter</a>
                     </div>
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -68,7 +74,7 @@
                     <td>{{$dc->ch_chapter_title}}</td>
                     <td>
                         @if (isset($dc->user_id))
-                        {{$dc->user_id}}
+                        {{$user[0]->name}}
                         @else
                         <span class="badge badge-warning">PENDING</span>
                         @endif
@@ -86,24 +92,66 @@
                     <td>
                         @if (($dc->status) == '0')
                         <span class="badge badge-warning">PENDING</span>
+                        @elseif (($dc->status) == '1')
+                        <span class="badge badge-info">TRANSLATING</span>
+                        @elseif (($dc->status) == '2')
+                        <span class="badge badge-primary">SUBMITED</span>
+                        @elseif (($dc->status) == '3')
+                        <span class="badge badge-danger">REVISION</span>
                         @else
-                        <span class="badge badge-success">REVIEW</span>
+                        <span class="badge badge-success">SUCCESS</span>
                         @endif
                     </td>
                     <td>
+                        {{-- for admin --}}
+                        @if (auth()->user()->role == 1)
                         <a href="{{route('document-chapters.edit', $dc->id)}}" class="btn btn-sm btn-primary"><i
                                 class="bi bi-pencil-square"></i> Edit</a>
-
-                        {{-- <a href="{{route('document-chapters.manageChapters', $d->id)}}"
-                            class="btn btn-sm btn-warning"><i class="bi bi-kanban"></i> Chapter
-                            Management</a> --}}
 
                         <form action="{{route('document-chapters.destroy', $dc->id)}}" method="POST" class="d-inline">
                             @csrf
                             @method('delete')
 
+                            <input type="hidden" name="document_id" value="{{$dc->document_id}}">
+
                             <button class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i> Delete</button>
                         </form>
+
+                        {{-- only show button when status is submited --}}
+                        @if ($dc->status == "2")
+                        <a href="{{route('document-chapters.check', $dc->id)}}" class="btn btn-sm btn-success"><i
+                                class="bi bi-spellcheck"></i> Check</a>
+                        @endif
+
+                        @endif
+
+                        {{-- for translator --}}
+                        @if (auth()->user()->role == 2)
+
+                        {{-- button only show when status is pending and translating --}}
+                        @if (($dc->status == "0")||($dc->status == "1")||($dc->status == "3"))
+                        <a href="{{route('task-translator.edit', $dc->id)}}" class="btn btn-sm btn-primary"><i
+                                class="bi bi-pen"></i> Translate</a>
+
+                        @else
+                        <p>No Actions</p>
+                        @endif
+
+                        {{-- button only show when done translating and wanna to submit --}}
+                        @if ($dc->status == "1")
+                        <form action="{{route('task-translator.updateStatusSubmit', $dc->id)}}" method="POST"
+                            class="d-inline">
+                            @csrf
+                            @method('put')
+
+                            <input type="hidden" name="document_id" value="{{$dc->document_id}}">
+                            <input type="hidden" name="status" value=2>
+
+                            <button class="btn btn-sm btn-success"><i class="bi bi-check2-circle"></i> Submit</button>
+                        </form>
+                        @endif
+
+                        @endif
                     </td>
                 </tr>
                 @empty

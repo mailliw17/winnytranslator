@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DocumentChapter extends Model
 {
     protected $fillable = [
-        'document_id', 'user_id', 'ch_chapter_title', 'id_chapter_title', 'number_words', 'ch_text', 'id_text', 'status'
+        'document_id', 'user_id', 'ch_chapter_title', 'id_chapter_title', 'number_words', 'cost_of_translate', 'ch_text', 'id_text', 'revision_reason', 'status'
     ];
 
     public function document()
