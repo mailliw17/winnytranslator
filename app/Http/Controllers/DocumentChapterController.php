@@ -33,25 +33,35 @@ class DocumentChapterController extends Controller
         // return $doc_chapter;
 
         if ($doc_chapter->isEmpty()) {
-
             // prevent not error 0 offset
             $user_id = 0;
             $user = DB::table('users')
                 ->where('id', '=', $user_id)
                 ->get();
-            // return $user;
+
+            $user_payment = DB::table('user_payments')
+                ->where('user_id', '=', $user_id)
+                ->get();
         } else {
             $user_id = $doc_chapter[0]->user_id;
             $user = DB::table('users')
                 ->where('id', '=', $user_id)
                 ->get();
+            // return $user;
+
+            // for user payment information
+            $user_payment = DB::table('user_payments')
+                ->where('user_id', '=', $user_id)
+                ->get();
+            // return $user_payment;
         }
 
         return view('pages.admin.documentchapter.index')->with(
             [
                 'doc' => $doc,
                 'doc_chapter' => $doc_chapter,
-                'user' => $user
+                'user' => $user,
+                'user_payment' => $user_payment
             ]
         );
     }
@@ -217,6 +227,12 @@ class DocumentChapterController extends Controller
 
         $doc_chap = DocumentChapter::findOrFail($id);
         $doc_chap->update($validatedData);
+
+        // add Number Chapter Done
+        $doc = Document::findOrFail($id_doc);
+        $doc->number_chapter_done += 1;
+        $doc->save();
+
         // $request->session()->flash('success', 'Registration User Successfully');
         return redirect()->route('document-chapters.manageChapters', $id_doc);
     }
@@ -249,6 +265,6 @@ class DocumentChapterController extends Controller
 
         $id_doc = $request['document_id'];
 
-        return redirect()->route('documents-chapters.manageChapters', $id_doc);
+        return redirect()->route('document-chapters.manageChapters', $id_doc);
     }
 }

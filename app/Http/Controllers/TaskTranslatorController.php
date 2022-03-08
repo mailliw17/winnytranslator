@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Document;
 use App\DocumentChapter;
+use App\UserPayment;
+use DB;
 
 class TaskTranslatorController extends Controller
 {
@@ -87,12 +89,25 @@ class TaskTranslatorController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $validatedData = $request->validate([
             'user_id' => 'required|int',
             'status' => 'required|int',
             'id_chapter_title' => 'required|min:3',
             'id_text' => 'required',
+            'number_words' => 'required|int',
         ]);
+
+        // START cost calculation
+        $user_id = $request->user_id;
+        $user_payment = DB::table('user_payments')
+            ->where('user_id', '=', $user_id)
+            ->get();
+        $price = $user_payment[0]->price;
+        $calculate = ($validatedData['number_words'] / 1000) * $price;
+        $validatedData['cost_of_translate'] = $calculate;
+        // END cost calculation
+
 
         $id_doc = $request['document_id'];
 

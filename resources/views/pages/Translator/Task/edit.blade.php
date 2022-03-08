@@ -9,8 +9,10 @@
         <form method="POST" action="{{ route('task-translator.update', $doc_chap->id)}}">
             @method('PUT')
             @csrf
+
             {{-- hidden form --}}
             <input type="hidden" name="document_id" value="{{$doc_chap->document_id}}">
+            <input type="hidden" name="number_words" value="{{$doc_chap->number_words}}">
             <input type="hidden" name="user_id" value=" {{ auth()->user()->id }}">
             <input type="hidden" name="status" value=1>
 
@@ -20,6 +22,17 @@
                 </div>
                 <textarea class="form-control" name="note" id="note" rows="10" readonly>{{ $note->note }}</textarea>
             </div>
+
+            {{-- show if only revision --}}
+            @if ($doc_chap->revision_reason)
+            <div class="form-group mt-3">
+                <div class="text-center">
+                    <h5 for="ch_text">Revision Note</h5>
+                </div>
+                <textarea class="form-control" name="note" id="note" rows="3"
+                    readonly>{{ $doc_chap->revision_reason }}</textarea>
+            </div>
+            @endif
 
             <hr>
 

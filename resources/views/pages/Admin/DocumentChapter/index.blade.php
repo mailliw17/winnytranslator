@@ -82,8 +82,8 @@
                     <td>{{$dc->number_words}}</td>
 
                     <td>
-                        @if (isset($dc->cost_of_translate))
-                        {{$dc->cost_of_translate}}
+                        @if (isset($dc->user_id))
+                        {{$dc->cost_of_translate}} ¥
                         @else
                         <span class="badge badge-warning">PENDING</span>
                         @endif
@@ -105,6 +105,9 @@
                     <td>
                         {{-- for admin --}}
                         @if (auth()->user()->role == 1)
+
+                        {{-- if document chapter Acc --}}
+                        @if ($dc->status != "10")
                         <a href="{{route('document-chapters.edit', $dc->id)}}" class="btn btn-sm btn-primary"><i
                                 class="bi bi-pencil-square"></i> Edit</a>
 
@@ -116,6 +119,10 @@
 
                             <button class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i> Delete</button>
                         </form>
+                        @else
+                        <p>No Actions</p>
+                        @endif
+
 
                         {{-- only show button when status is submited --}}
                         @if ($dc->status == "2")
