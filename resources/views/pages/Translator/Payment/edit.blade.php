@@ -19,10 +19,15 @@
 
             <div class="form-group ">
                 <label for="payment_method">Payment Method</label>
-                <input type="text" class="form-control @error('payment_method') is-invalid
-                    @enderror" id="payment_method" name="payment_method"
-                    value="{{old('payment_method') ? old('payment_method') : $user->payment_method }}"
-                    autocomplete="off" autofocus>
+
+                <select class="form-control  @error('payment_method') is-invalid
+                @enderror" id="payment_method" name="payment_method"
+                    value="{{old('payment_method') ? old('payment_method') : $user->payment_method }}">
+                    <option selected disabled>--FILL THIS INPUT--</option>
+                    <option value="Wepay">Wepay</option>
+                    <option value="Alipay">Alipay</option>
+                    <option value="BCA">BCA</option>
+                </select>
                 @error('payment_method')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -31,7 +36,7 @@
             </div>
 
             <div class="form-group ">
-                <label for="account_info">Account Info</label>
+                <label for="account_info">Account Number</label>
                 <input type="text" class="form-control @error('account_info') is-invalid
                 @enderror" id="account_info" name="account_info" autocomplete="off"
                     value="{{old('account_info') ? old('account_info') : $user->account_info }}">
@@ -41,35 +46,23 @@
                 </div>
                 @enderror
             </div>
+
+            <div class="form-group ">
+                <label for="account_info">Account Name</label>
+                <input type="text" class="form-control @error('account_name') is-invalid
+                @enderror" id="account_name" name="account_name" autocomplete="off"
+                    value="{{old('account_name') ? old('account_name') : $user->account_name }}">
+                @error('account_name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
             <div class="text-right">
                 <button type="submit" class="btn btn-sm btn-primary"> Save</button>
             </div>
 
-            {{-- <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="payment_method">Payment Method</label>
-                    <input type="text" class="form-control @error('payment_method') is-invalid
-                    @enderror" id="payment_method" name="payment_method" value="{{old('payment_method')}}" autofocus>
-                    @error('payment_method')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="account_info">Account Info</label>
-                    <input type="text" class="form-control @error('account_info') is-invalid
-                    @enderror" id="account_info" name="account_info" value="{{old('account_info')}}">
-                    @error('account_info')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div> --}}
-            {{-- <div class="text-center">
-                <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-plus-square"></i> Add</button>
-            </div> --}}
+
         </form>
     </div>
 

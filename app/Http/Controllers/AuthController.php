@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use App\UserPayment;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
 
 class AuthController extends Controller
 {
@@ -23,14 +26,15 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            $role = auth()->user()->role;
 
+            $role = auth()->user()->role;
+            // dd($role);
             switch ($role) {
                 case 1:
                     return redirect()->intended('/documents');
                     break;
                 case 2:
-                    return redirect()->intended('/account-translator');
+                    return redirect()->intended('/payment-translator/info');
                     break;
             };
         }
@@ -53,18 +57,34 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'username' => 'required|unique:users|min:3',
-            'email' => 'required|email:dns',
-            'phone' => 'required',
-            'password' => 'required|min:3',
-            'role' => 'required'
-        ]);
+        // generate UUID for user
+        $request['id'] =  Uuid::uuid4()->toString();
+
+        // take UUID from id(user table) to id_user (user_payments table)
+        $request['user_id'] =  $request['id'];
+
+        $validatedData = $request->validate(
+            [
+                'id' => 'required',
+                'name' => 'required|max:255',
+                'username' => 'required|unique:users|min:3',
+                'email' => 'required|email:dns',
+                'phone' => 'required',
+                'password' => 'required|min:3',
+                'role' => 'required',
+                // for payment info
+                'user_id' => 'required',
+                'payment_method' => 'required',
+                'account_info' => 'required',
+                'account_name' => 'required',
+                'price' => 'required',
+            ]
+        );
 
         $validatedData['password'] = Hash::make($validatedData['password']);
 
         User::create($validatedData);
+        UserPayment::create($validatedData);
         $request->session()->flash('success', 'Registration User Successfully');
         return redirect()->route('users.index');
     }

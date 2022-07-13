@@ -99,13 +99,15 @@ class TaskTranslatorController extends Controller
         ]);
 
         // START cost calculation
-        $user_id = $request->user_id;
-        $user_payment = DB::table('user_payments')
-            ->where('user_id', '=', $user_id)
-            ->get();
-        $price = $user_payment[0]->price;
-        $calculate = ($validatedData['number_words'] / 1000) * $price;
-        $validatedData['cost_of_translate'] = $calculate;
+        if ($validatedData['status'] == 1) {
+            $user_id = $request->user_id;
+            $user_payment = DB::table('user_payments')
+                ->where('user_id', '=', $user_id)
+                ->get();
+            $price = $user_payment[0]->price;
+            $calculate = ($validatedData['number_words'] / 1000) * $price;
+            $validatedData['cost_of_translate'] = $calculate;
+        }
         // END cost calculation
 
 

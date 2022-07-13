@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Document;
 use App\DocumentChapter;
 use Illuminate\Http\Request;
@@ -20,7 +21,22 @@ class DocumentController extends Controller
 
     public function index()
     {
-        $doc = Document::get();
+        // get data from document table
+        $doc = DB::table('documents')
+            ->leftJoin('document_chapters', 'documents.id', '=', 'document_chapters.document_id')
+            ->select('documents.*', DB::raw('COUNT(document_chapters.document_id) as document_chapter_count'),  DB::raw('SUM(document_chapters.cost_of_translate) as cost_of_translate'))
+            ->where('document_chapters.status', '=', '10') // show the doc with chapter
+            // show doc with the various document chapter status
+            ->orWhere('document_chapters.status', '=', '0') // created
+            ->orWhere('document_chapters.status', '=', '1') // ongoing
+            ->orWhere('document_chapters.status', '=', '2') // submitted
+            ->orWhere('document_chapters.status', '=', '3') // rejected
+            ->orWhereNull('document_chapters.status')   //show new doc without chapter
+            ->groupBy('documents.id')
+            ->get();
+
+        // dd($doc);
+
         return view('pages.admin.document.index')->with(
             [
                 'doc' => $doc
@@ -50,9 +66,9 @@ class DocumentController extends Controller
             'id_title' => 'required',
             'ch_title' => 'required',
             'number_chapter' => 'required|int',
-            'number_chapter_done' => 'required|int',
-            'cost_of_translate' => 'required|int',
-            'note' => 'required',
+            // 'number_chapter_done' => 'required|int',
+            // 'cost_of_translate' => 'required|int',
+            // 'note' => 'required',
         ]);
         // dd('lolos');
 

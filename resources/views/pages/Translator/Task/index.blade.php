@@ -17,8 +17,8 @@
                     <th>Title</th>
                     <th>Chinese Title</th>
                     <th>Number of Chapters</th>
-                    <th>Chapter Done</th>
-                    <th>Cost (¥)</th>
+                    {{-- <th>Chapter Done</th> --}}
+                    {{-- <th>Cost (¥)</th> --}}
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -29,8 +29,8 @@
                     <td>{{$d->id_title}}</td>
                     <td>{{$d->ch_title}}</td>
                     <td>{{$d->number_chapter}}</td>
-                    <td>{{$d->number_chapter_done}}</td>
-                    <td>{{$d->cost_of_translate}}</td>
+                    {{-- <td>{{$d->number_chapter_done}}</td> --}}
+                    {{-- <td>{{$d->cost_of_translate}}</td> --}}
                     <td>
                         <a href="{{route('document-chapters.manageChapters', $d->id)}}"
                             class="btn btn-sm btn-primary"><i class="bi bi-eye"></i> Look</a>

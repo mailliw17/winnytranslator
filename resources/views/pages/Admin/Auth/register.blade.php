@@ -1,17 +1,18 @@
 @extends('layouts.default')
 
-@section('title', 'Winny Translator | Registration')
+@section('title', 'WW World | Create New Account')
 @section('content')
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
     <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Register New Account</h1>
+        <h1 class="h2">Create New Account</h1>
     </div>
 
     <div class="container">
         <form method="POST" action="{{ route('register')}}">
             @csrf
+
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="name">Name</label>
@@ -84,8 +85,58 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <hr>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="payment_method">Payment Method</label>
 
+                    <select class="form-control  @error('payment_method') is-invalid
+                @enderror" id="payment_method" name="payment_method" value="{{old('payment_method')}}" autofocus>
+                        <option selected disabled>--FILL THIS INPUT--</option>
+                        <option value="Wepay">Wepay</option>
+                        <option value="Alipay">Alipay</option>
+                        <option value="BCA">BCA</option>
+                    </select>
+
+                    @error('payment_method')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="account_info">Account Number</label>
+                    <input type="text" class="form-control @error('account_info') is-invalid
+                @enderror" id="account_info" name="account_info" value="{{old('account_info')}}" autocomplete="off">
+                    @error('account_info')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="account_info">Account Name</label>
+                    <input type="text" class="form-control @error('account_name') is-invalid
+                @enderror" id="account_name" name="account_name" value="{{old('account_name')}}" autocomplete="off">
+                    @error('account_name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="account_info">Price</label>
+                    <input type="number" class="form-control @error('price') is-invalid
+                @enderror" id="price" name="price" value="{{old('price')}}" autocomplete="off">
+                    @error('price')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
             </div>
             <button type="submit" class="btn btn-block btn-sm btn-primary">Register</button>
         </form>

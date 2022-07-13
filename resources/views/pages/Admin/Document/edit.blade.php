@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'Winny Translator | Registration')
+@section('title', 'WW World | Edit Doc')
 @section('content')
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">

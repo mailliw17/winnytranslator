@@ -14,7 +14,18 @@
             <input type="hidden" name="document_id" value="{{$doc_chap->document_id}}">
             <input type="hidden" name="number_words" value="{{$doc_chap->number_words}}">
             <input type="hidden" name="user_id" value=" {{ auth()->user()->id }}">
-            <input type="hidden" name="status" value=1>
+
+            {{-- condition for pre-submit & re-submit --}}
+            {{-- kalau baru awal banget translate / pas mau edit lagi - pas diinput status naik jadi 1 --}}
+            @if(($doc_chap->status == 0)||($doc_chap->status == 1))
+            <input type="text" name="status" value=1>
+
+            {{-- kalau saat revisi dan pas mau submit status jadi 1 --}}
+            @elseif($doc_chap->status == 3)
+            <input type="text" name="status" value=2>
+            @else
+
+            @endif
 
             <div class="form-group mt-3">
                 <div class="text-center">

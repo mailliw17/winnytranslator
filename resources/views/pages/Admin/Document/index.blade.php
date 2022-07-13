@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'Winny Translator | Document')
+@section('title', 'WW World | Doc Management')
 @section('content')
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
@@ -46,7 +46,7 @@
                     <th>Title</th>
                     <th>Chinese Title</th>
                     <th>Number of Chapters</th>
-                    <th>Chapter Done</th>
+                    {{-- <th>Chapter Done</th> --}}
                     <th>Cost (¥)</th>
                     <th>Actions</th>
                 </tr>
@@ -58,8 +58,14 @@
                     <td>{{$d->id_title}}</td>
                     <td>{{$d->ch_title}}</td>
                     <td>{{$d->number_chapter}}</td>
-                    <td>{{$d->number_chapter_done}}</td>
-                    <td>{{$d->cost_of_translate}}</td>
+                    {{-- <td>{{$d->document_chapter_count}}</td> --}}
+                    <td>
+                        @if (isset($d->cost_of_translate))
+                        {{$d->cost_of_translate}}
+                        @else
+                        0
+                        @endif
+                    </td>
                     <td>
                         <a href="{{route('documents.edit', $d->id)}}" class="btn btn-sm btn-primary"><i
                                 class="bi bi-pencil-square"></i> Edit</a>

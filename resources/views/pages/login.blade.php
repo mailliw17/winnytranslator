@@ -50,7 +50,7 @@
       src="https://fscl01.fonpit.de/userfiles/6727621/image/2016/HeroS-random/google-translate-hero-2-w810h462.jpg"
       alt="" width="200" height="100">
 
-    <h5 class="">Welcome to Winny Translator</h5>
+    <h5 class="">Welcome to WW World</h5>
 
     @if (session()->has('loginError'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">

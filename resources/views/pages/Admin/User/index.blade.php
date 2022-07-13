@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'Winny Translator | User')
+@section('title', 'WW World | User Account')
 @section('content')
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
@@ -30,7 +30,7 @@
                     </div>
                     {{-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                     --}}
-                    <a href="{{ route('register')}}" class="btn btn-primary "> <i class="bi bi-plus-square-dotted"></i>
+                    <a href="{{ route('register')}}" class="btn btn-success "> <i class="bi bi-plus-square-dotted"></i>
                         Create New</a>
                 </div>
             </div>
@@ -87,15 +87,15 @@
                         <td>{{$user->email}}</td>
                         <td>{{$user->phone}}</td>
                         <td>
-                            <a href="{{route('users.edit', $user->id)}}" class="btn btn-sm btn-primary"><i
-                                    class="bi bi-pencil-square"></i> Edit</a>
+                            <a href="{{route('users.show', $user->id)}}" class="btn btn-sm btn-primary"><i
+                                    class="bi bi-info-square"></i> Info</a>
 
-                            <form action="{{route('users.destroy', $user->id)}}" method="POST" class="d-inline">
+                            {{-- <form action="{{route('users.destroy', $user->id)}}" method="POST" class="d-inline">
                                 @csrf
                                 @method('delete')
 
                                 <button class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i> Delete</button>
-                            </form>
+                            </form> --}}
 
                             <a href="{{route('forgot-password', $user->id)}}" class="btn btn-sm btn-warning"><i
                                     class="bi bi-lock"> </i> Password</a>
@@ -141,15 +141,8 @@
                                 @if (auth()->user()->id == $user->id)
                                 <p>No Action</p>
                                 @else
-                                <a href="{{route('users.edit', $user->id)}}" class="btn btn-sm btn-primary"><i
-                                        class="bi bi-pencil-square"></i> Edit</a>
-
-                                <form action="{{route('users.destroy', $user->id)}}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('delete')
-
-                                    <button class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i> Delete</button>
-                                </form>
+                                <a href="{{route('users.show', $user->id)}}" class="btn btn-sm btn-primary"><i
+                                        class="bi bi-info-square"></i> Info</a>
 
                                 <a href="{{route('users.edit', $user->id)}}" class="btn btn-sm btn-warning"><i
                                         class="bi bi-lock"> </i> Password</a>

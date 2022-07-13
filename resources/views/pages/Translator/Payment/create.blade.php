@@ -17,8 +17,15 @@
 
             <div class="form-group ">
                 <label for="payment_method">Payment Method</label>
-                <input type="text" class="form-control @error('payment_method') is-invalid
-                    @enderror" id="payment_method" name="payment_method" value="{{old('payment_method')}}" autofocus>
+
+                <select class="form-control  @error('payment_method') is-invalid
+                @enderror" id="payment_method" name="payment_method" value="{{old('payment_method')}}" autofocus>
+                    <option selected disabled>--FILL THIS INPUT--</option>
+                    <option value="Wepay">Wepay</option>
+                    <option value="Alipay">Alipay</option>
+                    <option value="BCA">BCA</option>
+                </select>
+
                 @error('payment_method')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -27,10 +34,21 @@
             </div>
 
             <div class="form-group ">
-                <label for="account_info">Account Info</label>
+                <label for="account_info">Account Number</label>
                 <input type="text" class="form-control @error('account_info') is-invalid
-                @enderror" id="account_info" name="account_info" value="{{old('account_info')}}">
+                @enderror" id="account_info" name="account_info" value="{{old('account_info')}}" autocomplete="off">
                 @error('account_info')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+
+            <div class="form-group ">
+                <label for="account_info">Account Name</label>
+                <input type="text" class="form-control @error('account_name') is-invalid
+                @enderror" id="account_name" name="account_name" value="{{old('account_name')}}" autocomplete="off">
+                @error('account_name')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
@@ -40,31 +58,6 @@
                 <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-plus-square"></i> Add</button>
             </div>
 
-            {{-- <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="payment_method">Payment Method</label>
-                    <input type="text" class="form-control @error('payment_method') is-invalid
-                    @enderror" id="payment_method" name="payment_method" value="{{old('payment_method')}}" autofocus>
-                    @error('payment_method')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="account_info">Account Info</label>
-                    <input type="text" class="form-control @error('account_info') is-invalid
-                    @enderror" id="account_info" name="account_info" value="{{old('account_info')}}">
-                    @error('account_info')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div> --}}
-            {{-- <div class="text-center">
-                <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-plus-square"></i> Add</button>
-            </div> --}}
         </form>
     </div>
 

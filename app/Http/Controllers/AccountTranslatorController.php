@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\UserPayment;
 use DB;
+use Auth;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,21 @@ class AccountTranslatorController extends Controller
      */
     public function index()
     {
-        return view('pages.translator.account.index');
+        // show modal if this account not yet have rate from admin
+        $user_id = Auth::user()->id;
+
+        $rate = DB::table('user_payments')
+            ->select('user_payments.*')
+            ->where('user_id', '=', $user_id)
+            ->get();
+
+        // dd($rate);
+
+        return view('pages.translator.account.index')->with(
+            [
+                'rate' => $rate
+            ]
+        );
     }
 
     /**

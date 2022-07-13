@@ -32,6 +32,11 @@ class DocumentChapterController extends Controller
             ->get();
         // return $doc_chapter;
 
+        $doc_chapter_done =  DB::table('document_chapters')
+            ->where('document_id', '=', $id)
+            ->where('status', '=', '10')
+            ->get();
+
         if ($doc_chapter->isEmpty()) {
             // prevent not error 0 offset
             $user_id = 0;
@@ -61,7 +66,8 @@ class DocumentChapterController extends Controller
                 'doc' => $doc,
                 'doc_chapter' => $doc_chapter,
                 'user' => $user,
-                'user_payment' => $user_payment
+                'user_payment' => $user_payment,
+                'doc_chapter_done' => $doc_chapter_done,
             ]
         );
     }
@@ -75,7 +81,7 @@ class DocumentChapterController extends Controller
     {
     }
 
-    public function addChapter($id)
+    public function createChapter($id)
     {
         // for get document title
         $doc_chap = DB::table('documents')
@@ -125,6 +131,7 @@ class DocumentChapterController extends Controller
             'status' => 'required|int',
             'ch_chapter_title' => 'required|max:100',
             'ch_text' => 'required',
+            'is_paid' => 'required|int',
         ]);
 
         $id_doc = $validatedData['document_id'];
@@ -191,6 +198,7 @@ class DocumentChapterController extends Controller
         $validatedData = $request->validate([
             'ch_chapter_title' => 'required|min:3',
             'ch_text' => 'required',
+            'number_words' => 'required|int',
         ]);
 
         $id_doc = $request['document_id'];
@@ -215,25 +223,50 @@ class DocumentChapterController extends Controller
         return redirect()->route('document-chapters.manageChapters', $id_doc);
     }
 
-    public function acceptDocumentChapter(Request $request, $id)
+    public function afterCheckDocumentChapter(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'ch_chapter_title' => 'required|min:3',
-            'ch_text' => 'required',
-            'status' => 'required|int'
-        ]);
-
+        $status = $request['status'];
         $id_doc = $request['document_id'];
+
+        // dd($id_doc);
+
+        // if doc_chap get take out like new doc_chap
+        if ($status == 0) {
+            $validatedData = $request->validate([
+                'ch_chapter_title' => 'required',
+                'id_chapter_title' => 'required',
+                'cost_of_translate' => 'required',
+                'ch_text' => 'required',
+                'id_text' => 'required',
+                'status' => 'required|int',
+                'revision_reason' => '',
+                'reduced_fare' => '',
+                'user_id' => ''
+            ]);
+
+            // what expect to be null as a new doc_chap
+            $validatedData['id_chapter_title'] = null;
+            $validatedData['id_text'] = null;
+            $validatedData['cost_of_translate'] = null;
+            $validatedData['status'] = 0;
+            $validatedData['revision_reason'] = null;
+            $validatedData['reduced_fare'] = null;
+            $validatedData['user_id'] = null;
+        } else {
+            $validatedData = $request->validate([
+                'ch_chapter_title' => 'required',
+                'id_chapter_title' => 'required',
+                'cost_of_translate' => 'required',
+                'ch_text' => 'required',
+                'id_text' => 'required',
+                'status' => 'required|int',
+                'revision_reason' => '',
+                'reduced_fare' => ''
+            ]);
+        }
 
         $doc_chap = DocumentChapter::findOrFail($id);
         $doc_chap->update($validatedData);
-
-        // add Number Chapter Done
-        $doc = Document::findOrFail($id_doc);
-        $doc->number_chapter_done += 1;
-        $doc->save();
-
-        // $request->session()->flash('success', 'Registration User Successfully');
         return redirect()->route('document-chapters.manageChapters', $id_doc);
     }
 

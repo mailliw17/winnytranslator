@@ -20,35 +20,21 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">My Account Info</h5>
+                    <h5 class="card-title">My Account</h5>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Name : {{auth()->user()->name}}</li>
                         <li class="list-group-item">Username : {{auth()->user()->username}}</li>
                         <li class="list-group-item">Email : {{auth()->user()->email}}</li>
                         <li class="list-group-item">Phone : {{auth()->user()->phone}}</li>
-                        <li class="list-group-item">Created At : {{auth()->user()->created_at}}</li>
+                        {{-- <li class="list-group-item">Created At : {{auth()->user()->created_at}}</li> --}}
                     </ul>
-                    <div class="text-right">
+                    {{-- <div class="text-right">
                         <a href="{{route('account-translator.edit', auth()->user()->id)}}" class="btn btn-primary"><i
                                 class="bi bi-pencil-square"></i> Edit</a>
-                        <a href="{{route('payment-translator.show', auth()->user()->id)}}" class="btn btn-success"><i
-                                class="bi bi-cash-coin"></i> Payment</a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
-        {{-- <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Payment Information</h5>
-                    <p class="card-text">You have not added payment information</p>
-
-                    <div class="text-right">
-                        <a href="{{ route('payment-translator.create')}}" class="btn btn-primary">Add</a>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
     </div>
 </main>
 

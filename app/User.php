@@ -11,7 +11,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'username', 'email', 'phone', 'role', 'password'
+        'name', 'id', 'username', 'email', 'phone', 'role', 'password'
     ];
 
     public function userpayment()
@@ -23,4 +23,6 @@ class User extends Authenticatable
     {
         return $this->hasMany('DocumentChapter');
     }
+
+    public $incrementing = false;
 }

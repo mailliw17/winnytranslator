@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'Winny Translator | Registration')
+@section('title', 'WW World | Manage Note')
 @section('content')
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
@@ -18,7 +18,7 @@
 
             <div class="form-group">
                 <label for="note">Note</label>
-                <textarea class="form-control" name="note" id="note" rows="20">{{old('note') ? old('note') : $note[0]->note }}
+                <textarea class="form-control" name="note" id="note" rows="20" required>{{old('note') ? old('note') : $note[0]->note }} 
                 </textarea>
                 @error('note')
                 <div class="invalid-feedback">

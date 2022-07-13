@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'WW World | User Payment')
+@section('title', 'WW World | Payroll Account')
 @section('content')
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
@@ -16,12 +16,9 @@
                     <th>No</th>
                     <th>Name</th>
                     <th>Payment Method</th>
-                    <th>Account Info</th>
+                    <th>Account Number</th>
+                    <th>Account Name</th>
                     <th>Price</th>
-                    <th>Number of Chapters</th>
-                    <th>Number of Words</th>
-                    <th>Salary</th>
-                    <th>Last Payment</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -33,6 +30,7 @@
                     <td>{{$up->user->name}}</td>
                     <td>{{$up->payment_method}}</td>
                     <td>{{$up->account_info}}</td>
+                    <td>{{$up->account_name}}</td>
                     {{-- <td>{{(isset($up->price)) ? $up->price : '<span class="badge badge-warning">Warning</span>'}}
                     </td> --}}
                     <td>
@@ -42,10 +40,10 @@
                         <span class="badge badge-warning">Fill this value</span>
                         @endif
                     </td>
-                    <td>{{$up->number_chapters}}</td>
-                    <td>{{$up->number_words}}</td>
-                    <td>{{$up->salary}}</td>
-                    <td>{{$up->last_payment}}</td>
+                    {{-- <td>{{$up->number_chapters}}</td> --}}
+                    {{-- <td>{{$up->number_words}}</td> --}}
+                    {{-- <td>{{$up->salary}}</td> --}}
+                    {{-- <td>{{$up->last_payment}}</td> --}}
                     <td>
                         <a href="{{route('payments.edit', $up->id)}}" class="btn btn-sm btn-primary"><i
                                 class="bi bi-pencil-square"></i> Edit</a>

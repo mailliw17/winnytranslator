@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'Winny Translator | Document')
+@section('title', 'WW World | Doc Chapter Management')
 @section('content')
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
@@ -37,15 +37,20 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="bi bi-boxes"></i> Total Chapter : @if ($doc_chapter->count() < 1) 0
-                            @else {{$doc_chapter->count()}}
+                    <h5 class="card-title"><i class="bi bi-bookmark-plus"></i> Created :
+                        @if ($doc_chapter->count() < 1) 0 @else {{$doc_chapter->count()}}
+                            @endif
+                    </h5>
+
+                    <h5 class="card-title"><i class="bi bi-check-circle"></i> Finished :
+                        @if ($doc_chapter_done->count() < 1) 0 @else {{$doc_chapter_done->count()}}
                             @endif
                     </h5>
 
                     @if (auth()->user()->role == 1)
                     <div class="text-right">
-                        <a href="{{ route('document-chapters.add-chapter', $doc[0]->id)}}" class="btn btn-primary"><i
-                                class="bi bi-plus-square-dotted"></i> Add Chapter</a>
+                        <a href="{{ route('document-chapters.create-chapter', $doc[0]->id)}}" class="btn btn-primary"><i
+                                class="bi bi-plus-square-dotted"></i> Create Chapter</a>
                     </div>
                     @endif
 
@@ -63,7 +68,7 @@
                     <th>Translator</th>
                     <th>Number of Words</th>
                     <th>Cost</th>
-                    <th>Status</th>
+                    <th>Status (Reduced)</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -93,13 +98,29 @@
                         @if (($dc->status) == '0')
                         <span class="badge badge-warning">PENDING</span>
                         @elseif (($dc->status) == '1')
-                        <span class="badge badge-info">TRANSLATING</span>
+                        <button class="btn btn-outline-info btn-sm">
+                            Translating <span class="badge badge-secondary">
+                                {{is_null($dc->reduced_fare) ? 0 :
+                                $dc->reduced_fare}}%</span>
+                        </button>
                         @elseif (($dc->status) == '2')
-                        <span class="badge badge-primary">SUBMITED</span>
+                        <button class="btn btn-outline-primary btn-sm">
+                            Submitted
+                            <span class="badge badge-secondary">{{is_null($dc->reduced_fare) ? 0 :
+                                $dc->reduced_fare}}%</span>
+
+                        </button>
                         @elseif (($dc->status) == '3')
-                        <span class="badge badge-danger">REVISION</span>
+                        <button class="btn btn-outline-danger btn-sm">
+                            Revision
+                            <span class="badge badge-secondary">{{is_null($dc->reduced_fare) ? 0 :
+                                $dc->reduced_fare}}%</span>
+                        </button>
                         @else
-                        <span class="badge badge-success">SUCCESS</span>
+                        <button class="btn btn-outline-success btn-sm">
+                            Success <span class="badge badge-secondary">{{is_null($dc->reduced_fare) ? 0 :
+                                $dc->reduced_fare}}%</span>
+                        </button>
                         @endif
                     </td>
                     <td>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Auth;
 use App\User;
 use App\UserPayment;
 use Illuminate\Http\Request;
@@ -87,8 +89,6 @@ class PaymentController extends Controller
             'payment_method' => 'required',
             'account_info' => 'required',
             'price' => 'required|int',
-            'number_chapters' => '',
-            'number_words' => '',
         ]);
 
         $user = UserPayment::findOrFail($id);
