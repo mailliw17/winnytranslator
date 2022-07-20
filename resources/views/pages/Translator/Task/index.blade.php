@@ -14,7 +14,7 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Title</th>
+                    <th>Indonesia Title</th>
                     <th>Chinese Title</th>
                     <th>Number of Chapters</th>
                     {{-- <th>Chapter Done</th> --}}
@@ -26,7 +26,7 @@
                 @forelse ($doc as $d)
                 <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td>{{$d->id_title}}</td>
+                    <td>{{($d->id_title == null ? '-' : $d->id_title)}}</td>
                     <td>{{$d->ch_title}}</td>
                     <td>{{$d->number_chapter}}</td>
                     {{-- <td>{{$d->number_chapter_done}}</td> --}}

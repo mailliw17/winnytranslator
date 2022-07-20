@@ -65,7 +65,7 @@ class UserController extends Controller
 
         // dd($user_info_all);
 
-        return view('pages.admin.user.info')->with(
+        return view('pages.admin.user.show')->with(
             [
                 'user' => $user_info_all
             ]
@@ -122,6 +122,7 @@ class UserController extends Controller
             'account_info' => 'required',
             'account_name' => 'required',
             'price' => 'required',
+            'payment_period' => 'required'
         ]);
 
         $user = User::findOrFail($id);
@@ -133,7 +134,8 @@ class UserController extends Controller
                 'payment_method' => $validatedData['payment_method'],
                 'account_name' => $validatedData['account_name'],
                 'account_info' => $validatedData['account_info'],
-                'price' => $validatedData['price']
+                'price' => $validatedData['price'],
+                'payment_period' => $validatedData['payment_period']
             ]);
         $request->session()->flash('success-edit', 'Edit User Successfully');
         return redirect()->route('users.index');

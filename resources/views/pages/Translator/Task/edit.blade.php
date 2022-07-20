@@ -18,11 +18,11 @@
             {{-- condition for pre-submit & re-submit --}}
             {{-- kalau baru awal banget translate / pas mau edit lagi - pas diinput status naik jadi 1 --}}
             @if(($doc_chap->status == 0)||($doc_chap->status == 1))
-            <input type="text" name="status" value=1>
+            <input type="hidden" name="status" value=1>
 
             {{-- kalau saat revisi dan pas mau submit status jadi 1 --}}
             @elseif($doc_chap->status == 3)
-            <input type="text" name="status" value=2>
+            <input type="hidden" name="status" value=2>
             @else
 
             @endif
@@ -54,7 +54,7 @@
                         <input type="text" autocomplete="off" class="form-control @error('ch_chapter_title') is-invalid
                         @enderror" id="ch_chapter_title" name="ch_chapter_title"
                             value="{{old('ch_chapter_title') ? old('ch_chapter_title') : $doc_chap->ch_chapter_title }}"
-                            readonly autofocus>
+                            readonly>
                         @error('ch_chapter_title')
                         <div class="invalid-feedback">
                             {{ $message }}

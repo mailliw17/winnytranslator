@@ -6,7 +6,7 @@
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
     <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Document Chapters Management</h1>
+        <h5>Document Chapters Management</h5>
 
         <div class="btn-toolbar mb-2 mb-md-0">
             {{-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
@@ -20,13 +20,14 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="bi bi-card-heading"></i> Document Title : {{$doc[0]->ch_title}}
-                    </h5>
+                    <p class="card-title"><i class="bi bi-card-heading"></i> Document Title :
+                        {{$document->id_title}} / {{$document->ch_title}}
+                    </p>
 
                     @if (auth()->user()->role == 1)
                     <div class="text-right">
-                        <a href="{{ route('document-chapters.note', $doc[0]->id)}}" class="btn btn-warning"><i
-                                class="bi bi-journal-bookmark-fill"></i> Manage Note</a>
+                        <a href="{{ route('document-chapters.note', last(request()->segments()))}}"
+                            class="btn btn-warning btn-sm"><i class="bi bi-journal-bookmark-fill"></i> Manage Note</a>
                     </div>
                     @endif
 
@@ -37,20 +38,19 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="bi bi-bookmark-plus"></i> Created :
+                    <p class="card-title"><i class="bi bi-bookmark-plus"></i> Created :
                         @if ($doc_chapter->count() < 1) 0 @else {{$doc_chapter->count()}}
                             @endif
-                    </h5>
+                    </p>
 
-                    <h5 class="card-title"><i class="bi bi-check-circle"></i> Finished :
-                        @if ($doc_chapter_done->count() < 1) 0 @else {{$doc_chapter_done->count()}}
-                            @endif
-                    </h5>
+                    <p class="card-title"><i class="bi bi-check-circle"></i> Finished :
+                        {{$doc_chapter_finished}}
+                    </p>
 
                     @if (auth()->user()->role == 1)
                     <div class="text-right">
-                        <a href="{{ route('document-chapters.create-chapter', $doc[0]->id)}}" class="btn btn-primary"><i
-                                class="bi bi-plus-square-dotted"></i> Create Chapter</a>
+                        <a href="{{ route('document-chapters.create-chapter', last(request()->segments()))}}"
+                            class="btn btn-primary btn-sm"><i class="bi bi-plus-square-dotted"></i> Create Chapter</a>
                     </div>
                     @endif
 
@@ -79,7 +79,7 @@
                     <td>{{$dc->ch_chapter_title}}</td>
                     <td>
                         @if (isset($dc->user_id))
-                        {{$user[0]->name}}
+                        {{$dc->name}}
                         @else
                         <span class="badge badge-warning">PENDING</span>
                         @endif
@@ -124,11 +124,11 @@
                         @endif
                     </td>
                     <td>
-                        {{-- for admin --}}
+                        {{-- START BUTTON ADMIN --}}
                         @if (auth()->user()->role == 1)
 
                         {{-- if document chapter Acc --}}
-                        @if ($dc->status != "10")
+                        @if ($dc->status == 0)
                         <a href="{{route('document-chapters.edit', $dc->id)}}" class="btn btn-sm btn-primary"><i
                                 class="bi bi-pencil-square"></i> Edit</a>
 
@@ -140,8 +140,7 @@
 
                             <button class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i> Delete</button>
                         </form>
-                        @else
-                        <p>No Actions</p>
+
                         @endif
 
 
@@ -150,14 +149,26 @@
                         <a href="{{route('document-chapters.check', $dc->id)}}" class="btn btn-sm btn-success"><i
                                 class="bi bi-spellcheck"></i> Check</a>
                         @endif
-
                         @endif
+                        {{-- END OF BUTTON ADMIN --}}
 
-                        {{-- for translator --}}
+                        {{-- ---------------- --}}
+                        {{-- ------------------------ --}}
+
+                        {{-- START BUTTON TRANSLATOR --}}
                         @if (auth()->user()->role == 2)
 
-                        {{-- button only show when status is pending and translating --}}
-                        @if (($dc->status == "0")||($dc->status == "1")||($dc->status == "3"))
+
+                        {{-- button only show when status is pending and translating AND he translated this chapter --}}
+                        @if (
+                        (
+                        (($dc->status == "0")||($dc->status == "1")||($dc->status == "3"))
+                        &&
+                        ((auth()->user()->id) == ($dc->user_id))
+                        )
+                        ||
+                        ($dc->status == null)
+                        )
                         <a href="{{route('task-translator.edit', $dc->id)}}" class="btn btn-sm btn-primary"><i
                                 class="bi bi-pen"></i> Translate</a>
 
@@ -165,8 +176,13 @@
                         <p>No Actions</p>
                         @endif
 
-                        {{-- button only show when done translating and wanna to submit --}}
-                        @if ($dc->status == "1")
+                        {{-- button only show when done translating and wanna to submit AND he translated this chapter
+                        --}}
+                        @if (
+                        ($dc->status == "1")
+                        &&
+                        ((auth()->user()->id) == ($dc->user_id))
+                        )
                         <form action="{{route('task-translator.updateStatusSubmit', $dc->id)}}" method="POST"
                             class="d-inline">
                             @csrf
@@ -180,6 +196,7 @@
                         @endif
 
                         @endif
+                        {{-- END OF BUTTON TRANSLATOR --}}
                     </td>
                 </tr>
                 @empty

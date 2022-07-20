@@ -6,22 +6,22 @@
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
     <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Document Management</h1>
+        <h5>Document Management</h4>
 
-        <div class="btn-toolbar mb-2 mb-md-0">
-            {{-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                <span data-feather="calendar"></span>
-                This week
-            </button> --}}
-        </div>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                {{-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                    <span data-feather="calendar"></span>
+                    This week
+                </button> --}}
+            </div>
     </div>
 
     <div class="row">
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Total Document : {{$doc->count()}}</h5>
-                    <a href="{{ route('documents.create')}}" class="btn btn-primary"><i
+                    <p class="card-title">Total Document : {{$doc->count()}}</p>
+                    <a href="{{ route('documents.create')}}" class="btn btn-primary btn-sm"><i
                             class="bi bi-plus-square-dotted"></i> Create New</a>
                 </div>
             </div>
@@ -43,7 +43,7 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Title</th>
+                    <th>Indonesia Title</th>
                     <th>Chinese Title</th>
                     <th>Number of Chapters</th>
                     {{-- <th>Chapter Done</th> --}}
@@ -55,7 +55,7 @@
                 @forelse ($doc as $d)
                 <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td>{{$d->id_title}}</td>
+                    <td>{{($d->id_title == null ? '-' : $d->id_title)}}</td>
                     <td>{{$d->ch_title}}</td>
                     <td>{{$d->number_chapter}}</td>
                     {{-- <td>{{$d->document_chapter_count}}</td> --}}
@@ -74,7 +74,8 @@
                             class="btn btn-sm btn-warning"><i class="bi bi-kanban"></i> Chapter
                             Management</a>
 
-                        <form action="{{route('documents.destroy', $d->id)}}" method="POST" class="d-inline">
+                        <form action="{{route('documents.destroy', $d->id)}}" method="POST" class="d-inline"
+                            onclick="return confirm('Are you sure?')">
                             @csrf
                             @method('delete')
 

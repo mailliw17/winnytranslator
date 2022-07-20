@@ -62,22 +62,18 @@
             </div>
 
             <div class="form-row">
-                {{-- <div class="form-group col-md-6">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control @error('password') is-invalid
-                    @enderror" id="password" name="password">
-                    @error('password')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div> --}}
                 <div class="form-group col-md-6">
                     <label for="role">Role</label>
                     <select class="form-control @error('role') is-invalid
-                    @enderror" id="role" name="role" value={{old('role') ? old('role') : $user->role }}>
+                    @enderror" id="role" name="role">
+                        {{-- set select input dynamicly with dummy way --}}
+                        @if ($user->role == 2)
                         <option value=1>Admin</option>
+                        <option value=2 selected>Translator</option>
+                        @else
+                        <option value=1 selected>Admin</option>
                         <option value=2>Translator</option>
+                        @endif
                     </select>
                     @error('role')
                     <div class="invalid-feedback">
@@ -89,16 +85,28 @@
 
             <hr>
             <div class="form-row">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="payment_method">Payment Method</label>
 
                     <select class="form-control  @error('payment_method') is-invalid
                 @enderror" id="payment_method" name="payment_method"
                         value="{{old('payment_method') ? old('payment_method') : $user->payment_method }}" autofocus>
-                        <option selected disabled>--FILL THIS INPUT--</option>
-                        <option value="Wepay">Wepay</option>
+
+                        {{-- set select input dynamicly with dummy way --}}
+                        @if ($user->payment_method == 'Wepay')
+                        <option value="Wepay" selected>Wepay</option>
                         <option value="Alipay">Alipay</option>
                         <option value="BCA">BCA</option>
+                        @elseif($user->payment_method == 'Alipay')
+                        <option value="Wepay">Wepay</option>
+                        <option value="Alipay" selected>Alipay</option>
+                        <option value="BCA">BCA</option>
+                        @elseif($user->payment_method == 'BCA')
+                        <option value="Wepay">Wepay</option>
+                        <option value="Alipay">Alipay</option>
+                        <option value="BCA" selected>BCA</option>
+                        @endif
+
                     </select>
 
                     @error('payment_method')
@@ -108,7 +116,7 @@
                     @enderror
                 </div>
 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="account_info">Account Number</label>
                     <input type="text" class="form-control @error('account_info') is-invalid
                 @enderror" id="account_info" name="account_info"
@@ -120,7 +128,7 @@
                     @enderror
                 </div>
 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="account_info">Account Name</label>
                     <input type="text" class="form-control @error('account_name') is-invalid
                 @enderror" id="account_name" name="account_name"
@@ -132,12 +140,40 @@
                     @enderror
                 </div>
 
-                <div class="form-group col-md-3">
+
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
                     <label for="account_info">Price</label>
                     <input type="number" class="form-control @error('price') is-invalid
                 @enderror" id="price" name="price" value="{{old('price') ? old('price') : $user->price }}"
                         autocomplete="off">
                     @error('price')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="payment_method">Payment Period</label>
+
+                    <select class="form-control  @error('payment_period') is-invalid
+                @enderror" id="payment_period" name="payment_period">
+
+                        {{-- set select input dynamicly with dummy way --}}
+                        @if ($user->payment_period == 'M')
+                        <option value="W">Weekely</option>
+                        <option value="M" selected>Monthly</option>
+                        @elseif($user->payment_period == 'W')
+                        <option value="W" selected>Weekely</option>
+                        <option value="M">Monthly</option>
+                        @endif
+
+                    </select>
+
+                    @error('payment_period')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>

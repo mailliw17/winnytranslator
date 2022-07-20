@@ -15,10 +15,11 @@
             @csrf
             {{-- hidden form --}}
             <input type="hidden" name="document_id" value="{{$doc_chap->document_id}}">
-            <input type="text" name="status" id="status" value="">
-            <input type="text" name="cost_of_translate" id="cost_of_translate" value="{{$doc_chap->cost_of_translate}}">
+            <input type="hidden" name="status" id="status" value="">
+            <input type="hidden" name="cost_of_translate" id="cost_of_translate"
+                value="{{$doc_chap->cost_of_translate}}">
             <input type="hidden" name="original_cost" id="original_cost" value="{{$doc_chap->cost_of_translate}}">
-            <input type="text" id="user_id" name="user_id" value="{{$doc_chap->user_id}}">
+            <input type="hidden" id="user_id" name="user_id" value="{{$doc_chap->user_id}}">
 
 
             <div class="form-group mt-3">

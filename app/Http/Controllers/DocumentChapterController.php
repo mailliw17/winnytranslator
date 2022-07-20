@@ -21,53 +21,31 @@ class DocumentChapterController extends Controller
     // here is the index page
     public function manageChapters($id)
     {
-        // for document title
-        $doc = DB::table('documents')
-            ->where('id', '=', $id)
-            ->get();
-        // return $doc;
-
-        $doc_chapter =  DB::table('document_chapters')
+        // all of this query has been normalize in 20 july 2022
+        $doc_chapter = DB::table('document_chapters')
+            ->leftJoin('users', 'users.id', '=', 'document_chapters.user_id')
+            ->select('document_chapters.*', 'users.id as user_id', 'users.name as name')
             ->where('document_id', '=', $id)
             ->get();
-        // return $doc_chapter;
 
-        $doc_chapter_done =  DB::table('document_chapters')
+        $document = DB::table('documents')
+            ->where('documents.id', '=', $id)
+            ->first();
+
+        $doc_chapter_finished = DB::table('document_chapters')
             ->where('document_id', '=', $id)
-            ->where('status', '=', '10')
-            ->get();
+            ->where('document_chapters.status', '=', '10')
+            ->count();
 
-        if ($doc_chapter->isEmpty()) {
-            // prevent not error 0 offset
-            $user_id = 0;
-            $user = DB::table('users')
-                ->where('id', '=', $user_id)
-                ->get();
-
-            $user_payment = DB::table('user_payments')
-                ->where('user_id', '=', $user_id)
-                ->get();
-        } else {
-            $user_id = $doc_chapter[0]->user_id;
-            $user = DB::table('users')
-                ->where('id', '=', $user_id)
-                ->get();
-            // return $user;
-
-            // for user payment information
-            $user_payment = DB::table('user_payments')
-                ->where('user_id', '=', $user_id)
-                ->get();
-            // return $user_payment;
-        }
+        // dd($document);
+        // dd($doc_chapter);
+        // dd($doc_chapter_finished);
 
         return view('pages.admin.documentchapter.index')->with(
             [
-                'doc' => $doc,
-                'doc_chapter' => $doc_chapter,
-                'user' => $user,
-                'user_payment' => $user_payment,
-                'doc_chapter_done' => $doc_chapter_done,
+                'doc_chapter_finished' => $doc_chapter_finished,
+                'document' => $document,
+                'doc_chapter' => $doc_chapter
             ]
         );
     }
@@ -129,7 +107,7 @@ class DocumentChapterController extends Controller
             'document_id' => 'required|int',
             'number_words' => 'required|int',
             'status' => 'required|int',
-            'ch_chapter_title' => 'required|max:100',
+            'ch_chapter_title' => 'required|max:100|unique:document_chapters',
             'ch_text' => 'required',
             'is_paid' => 'required|int',
         ]);

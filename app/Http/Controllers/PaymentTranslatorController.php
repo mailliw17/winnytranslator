@@ -87,29 +87,27 @@ class PaymentTranslatorController extends Controller
      */
     public function info()
     {
-        $user = Auth::user();
-        $payment = DB::table('user_payments')
-            ->select('user_payments.*')
-            ->where('user_id', '=', $user->id)
-            ->get();
+        // $user = Auth::user();
+        // $payment = DB::table('user_payments')
+        //     ->select('user_payments.*')
+        //     ->where('user_id', '=', $user->id)
+        //     ->get();
 
-        // dd($payment);
-
-        if ($payment->isEmpty()) {
-            return view('pages.translator.payment.showNoSidebar')->with([
-                'payment' => $payment
-            ]);
-        } elseif ($payment[0]->price == null) {
-            return view('pages.translator.payment.showAskPriceFirst')->with([
-                'payment' => $payment
-            ]);
-        } else {
-            return view('pages.translator.payment.show')->with(
-                [
-                    'payment' => $payment
-                ]
-            );
-        }
+        // if ($payment->isEmpty()) {
+        //     return view('pages.translator.payment.showNoSidebar')->with([
+        //         'payment' => $payment
+        //     ]);
+        // } elseif ($payment[0]->price == null) {
+        //     return view('pages.translator.payment.showAskPriceFirst')->with([
+        //         'payment' => $payment
+        //     ]);
+        // } else {
+        //     return view('pages.translator.payment.show')->with(
+        //         [
+        //             'payment' => $payment
+        //         ]
+        //     );
+        // }
     }
 
     /**

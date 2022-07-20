@@ -91,7 +91,7 @@ class TaskTranslatorController extends Controller
     {
 
         $validatedData = $request->validate([
-            'user_id' => 'required|int',
+            'user_id' => 'required',
             'status' => 'required|int',
             'id_chapter_title' => 'required|min:3',
             'id_text' => 'required',

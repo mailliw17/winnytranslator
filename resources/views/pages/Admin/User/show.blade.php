@@ -30,14 +30,17 @@
                         PAYMENT DATA
                     </div>
                     <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Price : {{$user->price}}¥</li>
                         <li class="list-group-item">Method : {{$user->payment_method}}</li>
                         <li class="list-group-item">Account info : {{$user->account_info}}</li>
                         <li class="list-group-item">Account name : {{$user->account_name}}</li>
+                        <li class="list-group-item">Payment Period : {{($user->payment_period == 'M') ? 'Monthly' :
+                            'Weekly'}}</li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="text-right">
+        <div class="text-right mt-3">
             <a class="btn btn-sm btn-warning" href="{{route('users.edit', $user->id)}}">
                 <i class="bi bi-pencil-square"></i> Edit
             </a>

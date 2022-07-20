@@ -6,7 +6,7 @@
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
     <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Create New Account</h1>
+        <h5>Create New Account</h5>
     </div>
 
     <div class="container">
@@ -87,7 +87,7 @@
 
             <hr>
             <div class="form-row">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="payment_method">Payment Method</label>
 
                     <select class="form-control  @error('payment_method') is-invalid
@@ -105,7 +105,7 @@
                     @enderror
                 </div>
 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="account_info">Account Number</label>
                     <input type="text" class="form-control @error('account_info') is-invalid
                 @enderror" id="account_info" name="account_info" value="{{old('account_info')}}" autocomplete="off">
@@ -116,7 +116,7 @@
                     @enderror
                 </div>
 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="account_info">Account Name</label>
                     <input type="text" class="form-control @error('account_name') is-invalid
                 @enderror" id="account_name" name="account_name" value="{{old('account_name')}}" autocomplete="off">
@@ -126,11 +126,30 @@
                     </div>
                     @enderror
                 </div>
+            </div>
 
-                <div class="form-group col-md-3">
+            <div class="form-row">
+                <div class="form-group col-md-6">
                     <label for="account_info">Price</label>
                     <input type="number" class="form-control @error('price') is-invalid
                 @enderror" id="price" name="price" value="{{old('price')}}" autocomplete="off">
+                    @error('price')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="account_info">Payment Period</label>
+
+                    <select class="form-control  @error('payment_period') is-invalid
+                @enderror" id="payment_period" name="payment_period" value="{{old('payment_period')}}" autofocus>
+                        <option selected disabled>--FILL THIS INPUT--</option>
+                        <option value="W">Weekely</option>
+                        <option value="M">Monthly</option>
+                    </select>
+
                     @error('price')
                     <div class="invalid-feedback">
                         {{ $message }}

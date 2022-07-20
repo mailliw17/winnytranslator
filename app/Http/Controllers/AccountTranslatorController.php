@@ -17,19 +17,20 @@ class AccountTranslatorController extends Controller
      */
     public function index()
     {
+        // how to get user information from authentication
+        $user = Auth::user();
+
         // show modal if this account not yet have rate from admin
-        $user_id = Auth::user()->id;
-
-        $rate = DB::table('user_payments')
-            ->select('user_payments.*')
-            ->where('user_id', '=', $user_id)
-            ->get();
-
-        // dd($rate);
+        $user_info_all = DB::table('users')
+            ->join('user_payments', 'user_payments.user_id', '=', 'users.id')
+            ->select('user_payments.*', 'users.*')
+            ->where('users.id', '=', $user->id)
+            ->where('users.role', '=', 2)
+            ->first();
 
         return view('pages.translator.account.index')->with(
             [
-                'rate' => $rate
+                'user' => $user_info_all
             ]
         );
     }

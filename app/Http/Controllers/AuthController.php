@@ -34,7 +34,7 @@ class AuthController extends Controller
                     return redirect()->intended('/documents');
                     break;
                 case 2:
-                    return redirect()->intended('/payment-translator/info');
+                    return redirect()->intended('/account-translator');
                     break;
             };
         }
@@ -78,6 +78,7 @@ class AuthController extends Controller
                 'account_info' => 'required',
                 'account_name' => 'required',
                 'price' => 'required',
+                'payment_period' => 'required'
             ]
         );
 

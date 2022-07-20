@@ -24,7 +24,7 @@ class DocumentController extends Controller
         // get data from document table
         $doc = DB::table('documents')
             ->leftJoin('document_chapters', 'documents.id', '=', 'document_chapters.document_id')
-            ->select('documents.*', DB::raw('COUNT(document_chapters.document_id) as document_chapter_count'),  DB::raw('SUM(document_chapters.cost_of_translate) as cost_of_translate'))
+            ->select('documents.*', DB::raw('COUNT(document_chapters.document_id) as document_chapter_count'),  DB::raw('TRUNCATE(SUM(document_chapters.cost_of_translate),2) as cost_of_translate')) //truncate to standarize 2 digit after comma
             ->where('document_chapters.status', '=', '10') // show the doc with chapter
             // show doc with the various document chapter status
             ->orWhere('document_chapters.status', '=', '0') // created
@@ -63,7 +63,7 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'id_title' => 'required',
+            'id_title' => '',
             'ch_title' => 'required',
             'number_chapter' => 'required|int',
             // 'number_chapter_done' => 'required|int',
