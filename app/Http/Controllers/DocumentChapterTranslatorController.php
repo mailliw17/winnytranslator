@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Document;
 use App\DocumentChapter;
-use App\UserPayment;
+use Illuminate\Http\Request;
 use DB;
 
-class TaskTranslatorController extends Controller
+class DocumentChapterTranslatorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +16,34 @@ class TaskTranslatorController extends Controller
      */
     public function index()
     {
-        $doc = Document::get();
-        return view('pages.translator.task.index')->with(
+        //
+    }
+
+    // here is the index page
+    public function manageChapters($id)
+    {
+        // all of this query has been normalize in 20 july 2022
+        $doc_chapter = DB::table('document_chapters')
+            ->leftJoin('users', 'users.id', '=', 'document_chapters.user_id')
+            ->select('document_chapters.*', 'users.id as user_id', 'users.name as name')
+            ->where('document_id', '=', $id)
+            ->where('is_lock', '=', '0')
+            ->get();
+
+        $document = DB::table('documents')
+            ->where('documents.id', '=', $id)
+            ->first();
+
+        $doc_chapter_finished = DB::table('document_chapters')
+            ->where('document_id', '=', $id)
+            ->where('document_chapters.status', '=', '10')
+            ->count();
+
+        return view('pages.translator.documentchapter.index')->with(
             [
-                'doc' => $doc
+                'doc_chapter_finished' => $doc_chapter_finished,
+                'document' => $document,
+                'doc_chapter' => $doc_chapter
             ]
         );
     }
@@ -72,7 +95,7 @@ class TaskTranslatorController extends Controller
         $note = Document::findOrFail($doc_id);
         // return $note;
 
-        return view('pages.translator.task.edit')->with(
+        return view('pages.translator.documentchapter.edit')->with(
             [
                 'doc_chap' => $doc_chap,
                 'note' => $note
@@ -89,7 +112,6 @@ class TaskTranslatorController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $validatedData = $request->validate([
             'user_id' => 'required',
             'status' => 'required|int',
@@ -116,7 +138,18 @@ class TaskTranslatorController extends Controller
         $doc_chap = DocumentChapter::findOrFail($id);
         $doc_chap->update($validatedData);
         // $request->session()->flash('success', 'Registration User Successfully');
-        return redirect()->route('document-chapters.manageChapters', $id_doc);
+        return redirect()->route('document-chapters-translator.manageChapters', $id_doc);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 
     public function updateStatusSubmit(Request $request, $id)
@@ -131,17 +164,6 @@ class TaskTranslatorController extends Controller
         $doc_chap->update($validatedData);
 
         // $request->session()->flash('success', 'Registration User Successfully');
-        return redirect()->route('document-chapters.manageChapters', $id_doc);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect()->route('document-chapters-translator.manageChapters', $id_doc);
     }
 }

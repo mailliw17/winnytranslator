@@ -31,12 +31,25 @@
           Users Account
         </a>
       </li>
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+        <span>Payment</span>
+        <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+          <span data-feather="plus-circle"></span>
+        </a>
+      </h6>
       {{-- using withdraw controller --}}
       <li class="nav-item">
         <a class="nav-link" href="{{ route('withdraw.index')}}">
           <span data-feather="file"></span>
           <i class="bi bi-currency-exchange"></i>
-          Payroll
+          Payroll Translator History
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('withdraw.index')}}">
+          <span data-feather="file"></span>
+          <i class="bi bi-file-earmark-lock2"></i>
+          Lock Document Chapter
         </a>
       </li>
     </ul>
@@ -52,7 +65,7 @@
 
     <ul class="nav flex-column mb-2">
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('task-translator.index')}}">
+        <a class="nav-link" href="{{ route('documents-translator.index')}}">
           <span data-feather="file-text"></span>
           <i class="bi bi-list-task"></i>
           My Task

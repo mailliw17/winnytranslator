@@ -6,7 +6,7 @@
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
     <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h5>Document Chapters Management</h5>
+        <h5>Document Chapters Management (translator)</h5>
 
         <div class="btn-toolbar mb-2 mb-md-0">
             {{-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
@@ -24,13 +24,6 @@
                         {{$document->id_title}} / {{$document->ch_title}}
                     </p>
 
-                    @if (auth()->user()->role == 1)
-                    <div class="text-right">
-                        <a href="{{ route('document-chapters.note', last(request()->segments()))}}"
-                            class="btn btn-warning btn-sm"><i class="bi bi-journal-bookmark-fill"></i> Manage Note</a>
-                    </div>
-                    @endif
-
                 </div>
             </div>
         </div>
@@ -46,13 +39,6 @@
                     <p class="card-title"><i class="bi bi-check-circle"></i> Finished :
                         {{$doc_chapter_finished}}
                     </p>
-
-                    @if (auth()->user()->role == 1)
-                    <div class="text-right">
-                        <a href="{{ route('document-chapters.create-chapter', last(request()->segments()))}}"
-                            class="btn btn-primary btn-sm"><i class="bi bi-plus-square-dotted"></i> Create Chapter</a>
-                    </div>
-                    @endif
 
                 </div>
             </div>
@@ -124,58 +110,48 @@
                         @endif
                     </td>
                     <td>
-                        {{-- START BUTTON ADMIN --}}
-                        @if (auth()->user()->role == 1)
+                        {{-- START BUTTON TRANSLATOR --}}
+                        @if (auth()->user()->role == 2)
 
-                        {{-- if document chapter Acc --}}
-                        @if ($dc->status == 0)
-                        <a href="{{route('document-chapters.edit', $dc->id)}}" class="btn btn-sm btn-primary"><i
-                                class="bi bi-pencil-square"></i> Edit</a>
 
-                        <form action="{{route('document-chapters.destroy', $dc->id)}}" method="POST" class="d-inline">
-                            @csrf
-                            @method('delete')
+                        {{-- button only show when status is pending and translating AND he translated this chapter --}}
+                        @if (
+                        (
+                        (($dc->status == "0")||($dc->status == "1")||($dc->status == "3"))
+                        &&
+                        ((auth()->user()->id) == ($dc->user_id))
+                        )
+                        ||
+                        ($dc->status == null)
+                        )
+                        <a href="{{route('document-chapters-translator.edit', $dc->id)}}"
+                            class="btn btn-sm btn-primary"><i class="bi bi-pen"></i> Translate</a>
 
-                            <input type="hidden" name="document_id" value="{{$dc->document_id}}">
-
-                            <button class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i> Delete</button>
-                        </form>
-
-                        {{-- lock condition --}}
-                        @if ($dc->is_lock == 1)
-                        <form action="{{route('document-chapters.unlock', $dc->id)}}" method="POST" class="d-inline">
-                            @csrf
-                            @method('put')
-
-                            <input type="hidden" name="document_id" value="{{$dc->document_id}}">
-                            <input type="hidden" name="is_lock" value=0>
-
-                            <button class="btn btn-sm btn-info"><i class="bi bi-unlock"></i>Unlock</button>
-                        </form>
-                        {{-- unlock condition --}}
                         @else
+                        <p>No Actions</p>
+                        @endif
 
-                        <form action="{{route('document-chapters.lock', $dc->id)}}" method="POST" class="d-inline">
+                        {{-- button only show when done translating and wanna to submit AND he translated this chapter
+                        --}}
+                        @if (
+                        ($dc->status == "1")
+                        &&
+                        ((auth()->user()->id) == ($dc->user_id))
+                        )
+                        <form action="{{route('document-chapters-translator.updateStatusSubmit', $dc->id)}}"
+                            method="POST" class="d-inline">
                             @csrf
                             @method('put')
 
                             <input type="hidden" name="document_id" value="{{$dc->document_id}}">
-                            <input type="hidden" name="is_lock" value=1>
+                            <input type="hidden" name="status" value=2>
 
-                            <button class="btn btn-sm btn-dark"><i class="bi bi-lock"></i>Lock</button>
+                            <button class="btn btn-sm btn-success"><i class="bi bi-check2-circle"></i> Submit</button>
                         </form>
                         @endif
 
                         @endif
-
-
-                        {{-- only show button when status is submited --}}
-                        @if ($dc->status == "2")
-                        <a href="{{route('document-chapters.check', $dc->id)}}" class="btn btn-sm btn-success"><i
-                                class="bi bi-spellcheck"></i> Check</a>
-                        @endif
-                        @endif
-                        {{-- END OF BUTTON ADMIN --}}
+                        {{-- END OF BUTTON TRANSLATOR --}}
                     </td>
                 </tr>
                 @empty

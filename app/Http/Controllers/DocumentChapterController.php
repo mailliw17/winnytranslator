@@ -103,20 +103,43 @@ class DocumentChapterController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'document_id' => 'required|int',
-            'number_words' => 'required|int',
-            'status' => 'required|int',
-            'ch_chapter_title' => 'required|max:100|unique:document_chapters',
-            'ch_text' => 'required',
-            'is_paid' => 'required|int',
-        ]);
+        // unchecked checkbox
+        if ($request->post('is_not_same_title')) {
+            $validatedData = $request->validate([
+                'document_id' => 'required|int',
+                'number_words' => 'required|int',
+                'status' => 'required|int',
+                'ch_chapter_title' => 'required|max:100',
+                'ch_text' => 'required',
+                'is_paid' => 'required|int',
+                'is_lock' => 'required|int',
+            ]);
 
-        $id_doc = $validatedData['document_id'];
 
-        DocumentChapter::create($validatedData);
-        // $request->session()->flash('success', 'Registration User Successfully');
-        return redirect()->route('document-chapters.manageChapters', $id_doc);
+            $id_doc = $validatedData['document_id'];
+
+            DocumentChapter::create($validatedData);
+            // $request->session()->flash('success', 'Registration User Successfully');
+            return redirect()->route('document-chapters.manageChapters', $id_doc);
+        } else {
+            // checked checkbox
+            $validatedData = $request->validate([
+                'document_id' => 'required|int',
+                'number_words' => 'required|int',
+                'status' => 'required|int',
+                'ch_chapter_title' => 'required|max:100|unique:document_chapters',
+                'ch_text' => 'required',
+                'is_paid' => 'required|int',
+                'is_lock' => 'required|int',
+            ]);
+
+
+            $id_doc = $validatedData['document_id'];
+
+            DocumentChapter::create($validatedData);
+            // $request->session()->flash('success', 'Registration User Successfully');
+            return redirect()->route('document-chapters.manageChapters', $id_doc);
+        }
     }
 
     /**
@@ -276,6 +299,43 @@ class DocumentChapterController extends Controller
 
         $id_doc = $request['document_id'];
 
+        return redirect()->route('document-chapters.manageChapters', $id_doc);
+    }
+
+    public function checkSameTitle(Request $request)
+    {
+        $ch_chapter_title = $request->input('ch_chapter_title');
+        $data = DocumentChapter::where('ch_chapter_title', '=', $ch_chapter_title)->get();
+        return count($data);
+    }
+
+    public function unlockDocumentChapter(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'is_lock' => 'required',
+        ]);
+
+        $doc_chap = DocumentChapter::findOrFail($id);
+        $doc_chap->update($validatedData);
+
+        $id_doc = $request['document_id'];
+
+        // $request->session()->flash('success-edit', 'Edit User Successfully');
+        return redirect()->route('document-chapters.manageChapters', $id_doc);
+    }
+
+    public function lockDocumentChapter(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'is_lock' => 'required',
+        ]);
+
+        $doc_chap = DocumentChapter::findOrFail($id);
+        $doc_chap->update($validatedData);
+
+        $id_doc = $request['document_id'];
+
+        // $request->session()->flash('success-edit', 'Edit User Successfully');
         return redirect()->route('document-chapters.manageChapters', $id_doc);
     }
 }

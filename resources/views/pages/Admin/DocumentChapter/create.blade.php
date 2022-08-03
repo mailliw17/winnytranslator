@@ -16,7 +16,7 @@
             <input type="hidden" name="document_id" value="{{$doc_chap[0]->id}}">
             <input type="hidden" name="status" value=0>
             <input type="hidden" name="is_paid" value=0>
-
+            <input type="hidden" name="is_lock" value=1>
 
             <div class="form-group">
                 <div class="form-row">
@@ -25,12 +25,28 @@
                         <input type="text" autocomplete="off" class="form-control @error('ch_chapter_title') is-invalid
                         @enderror" id="ch_chapter_title" name="ch_chapter_title" value="{{old('ch_chapter_title')}}"
                             autofocus>
+
                         @error('ch_chapter_title')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
+
+                        <div class="alert alert-warning" role="alert">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="is_not_same_title">
+                                    <label class="form-check-label" for="gridCheck">
+                                        Check this box if you have input the correct title
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                         @enderror
+
                     </div>
+
+
+
                     <div class="col">
                         <label for="number_words"> <a
                                 href="https://www.chineseconverter.com/en/convert/chinese-character-count"
@@ -80,6 +96,43 @@
             $('#number_words').attr("value", wordCount)
 
         });
+
+        // Swal.fire({
+        //     title: 'Are you sure?',
+        //     text: "You won't be able to revert this!",
+        //     icon: 'warning',
+        //     showCancelButton: true,
+        //     confirmButtonColor: '#3085d6',
+        //     cancelButtonColor: '#d33',
+        //     confirmButtonText: 'Yes, delete it!'
+        //     }).then((result) => {
+        //     if (result.isConfirmed) {
+        //         Swal.fire(
+        //         'Deleted!',
+        //         'Your file has been deleted.',
+        //         'success'
+        //         )
+        //     }
+        // })
+
+        // $('#ch_chapter_title').keyup(function () {
+            
+        //     var ch_chapter_title = $(this).val();
+        //     console.log(ch_chapter_title);
+
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: '/document-chapters/check-same-title',
+        //         data: {ch_chapter_title: ch_chapter_title},
+        //         success: function(data){
+        //            if(data == 0){
+        //                alert('aman');
+        //            } else {
+        //                alert('judul sudah ada');
+        //            }
+        //         } 
+        //     });
+        // });
     });
 </script>
 

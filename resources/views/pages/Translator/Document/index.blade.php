@@ -32,7 +32,7 @@
                     {{-- <td>{{$d->number_chapter_done}}</td> --}}
                     {{-- <td>{{$d->cost_of_translate}}</td> --}}
                     <td>
-                        <a href="{{route('document-chapters.manageChapters', $d->id)}}"
+                        <a href="{{route('document-chapters-translator.manageChapters', $d->id)}}"
                             class="btn btn-sm btn-primary"><i class="bi bi-eye"></i> Look</a>
                     </td>
                 </tr>
