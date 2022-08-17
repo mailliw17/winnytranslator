@@ -38,16 +38,16 @@
                     value="{{$info_user_payment[0]->account_name}}" readonly>
             </div>
 
-            <div class="form-group ">
+            {{-- <div class="form-group ">
                 <label for="payment_method">Total Chapter</label>
                 <input type="text" class="form-control" id="total_doc" name="total_doc"
                     value="{{$info_doc[0]->total_doc}}" readonly>
-            </div>
+            </div> --}}
 
             {{-- this input for assign value to number_words_wd in withdraw_histories --}}
             <div class="form-group ">
-                <label for="payment_method">Total Words</label>
-                <input type="text" class="form-control" id="number_words_wd" name="number_words_wd" value="{{($info_doc[0]->total_number_words == null) ? '0' :
+                {{-- <label for="payment_method">Total Words</label> --}}
+                <input type="hidden" class="form-control" id="number_words_wd" name="number_words_wd" value="{{($info_doc[0]->total_number_words == null) ? '0' :
                     $info_doc[0]->total_number_words}}" readonly>
             </div>
 

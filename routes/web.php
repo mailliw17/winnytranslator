@@ -36,6 +36,7 @@ Route::put('/document-chapters/{id}/afterCheckDocumentChapter', 'DocumentChapter
 Route::put('/document-chapters/{id}/revision', 'DocumentChapterController@revisionDocumentChapter')->name('document-chapters.revision');
 Route::put('/document-chapters/{id}/unlock', 'DocumentChapterController@unlockDocumentChapter')->name('document-chapters.unlock');
 Route::put('/document-chapters/{id}/lock', 'DocumentChapterController@lockDocumentChapter')->name('document-chapters.lock');
+Route::put('/document-chapters/{id}/paidOff', 'DocumentChapterController@paidOff')->name('document-chapters.paidoff');
 
 
 // POST

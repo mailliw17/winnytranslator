@@ -17,6 +17,7 @@
             <input type="hidden" name="status" value=0>
             <input type="hidden" name="is_paid" value=0>
             <input type="hidden" name="is_lock" value=1>
+            <input type="hidden" name="is_vendor_paid" value=0>
 
             <div class="form-group">
                 <div class="form-row">

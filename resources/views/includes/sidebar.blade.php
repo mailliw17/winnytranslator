@@ -45,13 +45,6 @@
           Payroll Translator History
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('withdraw.index')}}">
-          <span data-feather="file"></span>
-          <i class="bi bi-file-earmark-lock2"></i>
-          Lock Document Chapter
-        </a>
-      </li>
     </ul>
     @endif
 

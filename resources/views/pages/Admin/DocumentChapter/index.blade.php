@@ -70,6 +70,7 @@
                     <th>Cost</th>
                     <th>Status (Reduced)</th>
                     <th>Actions</th>
+                    <th>Payment</th>
                 </tr>
             </thead>
             <tbody>
@@ -177,10 +178,29 @@
                         @endif
                         {{-- END OF BUTTON ADMIN --}}
                     </td>
+
+                    <td>
+                        @if (($dc->status == "10")&&($dc->is_vendor_paid == null))
+                        <form action="{{route('document-chapters.paidoff', $dc->id)}}" method="POST" class="d-inline">
+                            @csrf
+                            @method('put')
+
+                            <input type="hidden" name="document_id" value="{{$dc->document_id}}">
+                            <input type="hidden" name="is_vendor_paid" value=1>
+
+                            <button class="btn btn-sm btn-success"><i class="bi bi-wallet2"></i> PAID OFF</button>
+                        </form>
+                        @elseif(($dc->status == "10")&&($dc->is_vendor_paid == 1))
+                        <p><span class="badge badge-pill badge-success">Paid Off</span></p>
+                        @else
+
+                        @endif
+                    </td>
+
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="7" class="text-center p-5">
+                    <td colspan="8" class="text-center p-5">
                         Data not available
                     </td>
                 </tr>

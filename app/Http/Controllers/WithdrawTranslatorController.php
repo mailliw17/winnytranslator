@@ -26,12 +26,15 @@ class WithdrawTranslatorController extends Controller
      */
     public function create()
     {
+
         $user = Auth::user();
 
         $info_doc = DB::table('document_chapters')
             ->select(DB::raw('SUM(number_words) as total_number_words'),  DB::raw('ROUND(SUM(cost_of_translate),2) as total_cost_of_translate'), DB::raw('COUNT(id) as total_doc'))
             ->where('user_id', '=', $user->id)
             ->where('is_paid', '=', '0') // not yet paid
+            ->where('status', '=', '10') // document accepted
+            ->where('is_vendor_paid', '=', '1') //the vendor has paid 
             ->get();
 
         $info_user_payment = DB::table('user_payments')
@@ -71,7 +74,9 @@ class WithdrawTranslatorController extends Controller
         $user = Auth::user();
 
         $update = DB::table('document_chapters')
-            ->where('is_paid', 0)
+            ->where('is_paid', 0) //document has not paid
+            ->where('status', '=', '10') // document accepted
+            ->where('is_vendor_paid', '=', '1') //the vendor has paid 
             ->where('user_id', '=', $user->id)
             ->update(['is_paid' => 1]);
 

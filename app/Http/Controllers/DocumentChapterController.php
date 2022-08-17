@@ -113,6 +113,7 @@ class DocumentChapterController extends Controller
                 'ch_text' => 'required',
                 'is_paid' => 'required|int',
                 'is_lock' => 'required|int',
+                'is_vendor_paid' => 'required|int',
             ]);
 
 
@@ -131,6 +132,7 @@ class DocumentChapterController extends Controller
                 'ch_text' => 'required',
                 'is_paid' => 'required|int',
                 'is_lock' => 'required|int',
+                'is_vendor_paid' => 'required|int',
             ]);
 
 
@@ -328,6 +330,21 @@ class DocumentChapterController extends Controller
     {
         $validatedData = $request->validate([
             'is_lock' => 'required',
+        ]);
+
+        $doc_chap = DocumentChapter::findOrFail($id);
+        $doc_chap->update($validatedData);
+
+        $id_doc = $request['document_id'];
+
+        // $request->session()->flash('success-edit', 'Edit User Successfully');
+        return redirect()->route('document-chapters.manageChapters', $id_doc);
+    }
+
+    public function paidOff(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'is_vendor_paid' => 'required',
         ]);
 
         $doc_chap = DocumentChapter::findOrFail($id);
