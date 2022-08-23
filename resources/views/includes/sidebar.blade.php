@@ -16,6 +16,13 @@
           {{-- <span class="sr-only">(current)</span> --}}
         </a>
       </li>
+      {{-- <li class="nav-item">
+        <a class="nav-link" href="{{ route('documents-download.index')}}">
+          <span data-feather="home"></span>
+          <i class="bi bi-file-earmark-arrow-down"></i>
+          Download Document
+        </a>
+      </li> --}}
       {{-- using payment controller --}}
       {{-- <li class="nav-item">
         <a class="nav-link" href="{{ route('payments.index')}}">

@@ -27,6 +27,7 @@ Route::get('/document-chapters/{id}/check', 'DocumentChapterController@check')->
 Route::get('/payment-translator', 'PaymentTranslatorController@index');
 // Route::get('/payment-translator/info', 'PaymentTranslatorController@info')->name('payment-translator.info');
 Route::get('/withdraw/{id}/check', 'WithdrawController@check')->name('withdraw.check');
+// Route::get('/documents-download/{id}/download', 'DocumentDownloadController@download')->name('documents-download.download');
 
 // PUT
 Route::put('/user/{id}/forgot-password', 'AuthController@updatePassword')->name('update-password');
@@ -45,6 +46,7 @@ Route::post('/login', 'AuthController@authenticate');
 Route::post('/logout', 'AuthController@logout')->name('logout');
 Route::post('/document-chapters/check-title', 'DocumentChapterController@checkSameTitle')->name('document-chapters.check-same-title');
 
+
 // resource
 Route::resource('withdraw', 'WithdrawController');
 Route::resource('withdraw-translator', 'WithdrawTranslatorController');
@@ -54,6 +56,7 @@ Route::resource('account-translator', 'AccountTranslatorController');
 Route::resource('document-chapters', 'DocumentChapterController');
 Route::resource('document-chapters-translator', 'DocumentChapterTranslatorController');
 Route::resource('documents', 'DocumentController');
+// Route::resource('documents-download', 'DocumentDownloadController');
 Route::resource('documents-translator', 'DocumentTranslatorController');
 Route::resource('users', 'UserController');
 Route::resource('payments', 'PaymentController');

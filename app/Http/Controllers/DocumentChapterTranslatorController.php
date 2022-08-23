@@ -6,6 +6,7 @@ use App\Document;
 use App\DocumentChapter;
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 
 class DocumentChapterTranslatorController extends Controller
 {
@@ -88,19 +89,24 @@ class DocumentChapterTranslatorController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $doc_chap = DocumentChapter::findOrFail($id);
 
         $doc_id = $doc_chap->document_id;
-
+        $status = $doc_chap->status;
+        $user_id = $doc_chap->user_id;
+        // dd($doc_chap);
         $note = Document::findOrFail($doc_id);
-        // return $note;
-
-        return view('pages.translator.documentchapter.edit')->with(
-            [
-                'doc_chap' => $doc_chap,
-                'note' => $note
-            ]
-        );
+        if (($status) == 1 && ($user_id != $user->id)) {
+            return redirect()->back();
+        } else {
+            return view('pages.translator.documentchapter.edit')->with(
+                [
+                    'doc_chap' => $doc_chap,
+                    'note' => $note
+                ]
+            );
+        }
     }
 
     /**

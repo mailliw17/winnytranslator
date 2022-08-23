@@ -6,38 +6,9 @@
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
     <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h5>Document Management</h4>
-
-            <div class="btn-toolbar mb-2 mb-md-0">
-                {{-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                    <span data-feather="calendar"></span>
-                    This week
-                </button> --}}
-            </div>
+        <h5>Download Document</h4>
     </div>
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-title">Total Document : {{$doc->count()}}</p>
-                    <a href="{{ route('documents.create')}}" class="btn btn-primary btn-sm"><i
-                            class="bi bi-plus-square-dotted"></i> Create New</a>
-                </div>
-            </div>
-        </div>
-        {{-- <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div> --}}
-    </div>
-
-    <hr>
     <div class="table-responsive">
         <table class="table table-striped table-sm myTable">
             <thead>
@@ -47,7 +18,7 @@
                     <th>Chinese Title</th>
                     <th>Number of Chapters</th>
                     {{-- <th>Chapter Done</th> --}}
-                    <th>Cost (¥)</th>
+                    {{-- <th>Cost (¥)</th> --}}
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -59,28 +30,37 @@
                     <td>{{$d->ch_title}}</td>
                     {{-- <td>{{$d->number_chapter}}</td> --}}
                     <td>{{$d->document_chapter_count}}</td>
-                    <td>
+                    {{-- <td>
                         @if (isset($d->cost_of_translate))
                         {{$d->cost_of_translate}}
                         @else
                         0
                         @endif
-                    </td>
+                    </td> --}}
                     <td>
-                        <a href="{{route('documents.edit', $d->id)}}" class="btn btn-sm btn-primary"><i
-                                class="bi bi-pencil-square"></i> Edit</a>
+                        {{-- <a href="{{route('documents-download.download', $d->id)}}" method="POST"
+                            class="btn btn-sm btn-primary"><i class="bi bi-file-earmark-arrow-down"></i> Download</a>
+                        --}}
 
-                        <a href="{{route('document-chapters.manageChapters', $d->id)}}"
+                        <form action="{{route('documents-download.download', $d->id)}}" class="d-inline">
+
+                            <input type="hidden" value="{{$d->id}}">
+
+                            <button class="btn btn-sm btn-primary"><i class="bi bi-file-earmark-arrow-down"></i>
+                                Download</button>
+                        </form>
+
+                        {{-- <a href="{{route('document-chapters.manageChapters', $d->id)}}"
                             class="btn btn-sm btn-warning"><i class="bi bi-kanban"></i> Chapter
-                            Management</a>
+                            Management</a> --}}
 
-                        <form action="{{route('documents.destroy', $d->id)}}" method="POST" class="d-inline"
+                        {{-- <form action="{{route('documents.destroy', $d->id)}}" method="POST" class="d-inline"
                             onclick="return confirm('Are you sure?')">
                             @csrf
                             @method('delete')
 
                             <button class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i> Delete</button>
-                        </form>
+                        </form> --}}
                     </td>
                 </tr>
                 @empty
