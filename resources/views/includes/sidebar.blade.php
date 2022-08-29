@@ -1,4 +1,4 @@
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+{{-- <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
   <div class="sidebar-sticky pt-3">
     @if (auth()->user()->role == 1)
     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -13,24 +13,8 @@
           <span data-feather="home"></span>
           <i class="bi bi-file-earmark-text-fill"></i>
           Document Management
-          {{-- <span class="sr-only">(current)</span> --}}
         </a>
       </li>
-      {{-- <li class="nav-item">
-        <a class="nav-link" href="{{ route('documents-download.index')}}">
-          <span data-feather="home"></span>
-          <i class="bi bi-file-earmark-arrow-down"></i>
-          Download Document
-        </a>
-      </li> --}}
-      {{-- using payment controller --}}
-      {{-- <li class="nav-item">
-        <a class="nav-link" href="{{ route('payments.index')}}">
-          <span data-feather="file"></span>
-          <i class="bi bi-person-bounding-box"></i>
-          Payroll Account
-        </a>
-      </li> --}}
       <li class="nav-item">
         <a class="nav-link" href="{{ route('users.index')}}">
           <span data-feather="file"></span>
@@ -44,7 +28,6 @@
           <span data-feather="plus-circle"></span>
         </a>
       </h6>
-      {{-- using withdraw controller --}}
       <li class="nav-item">
         <a class="nav-link" href="{{ route('withdraw.index')}}">
           <span data-feather="file"></span>
@@ -96,4 +79,73 @@
     @endif
 
   </div>
-</nav>
+</nav> --}}
+
+<div class="sidebar" data-color="white" data-active-color="danger">
+  <div class="logo">
+    <a href="https://www.creative-tim.com" class="simple-text logo-mini">
+      <div class="logo-image-small">
+        <img src="{{asset('/img/logo-small.png')}}">
+      </div>
+      <!-- <p>CT</p> -->
+    </a>
+    <a class="simple-text logo-normal">
+      WW World
+      <!-- <div class="logo-image-big">
+        <img src="../assets/img/logo-big.png">
+      </div> -->
+    </a>
+  </div>
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+      <li class="active ">
+        <a href="{{ route('documents.index')}}">
+          <i class="nc-book-bookmark"></i>
+          <p>Document Management</p>
+        </a>
+      </li>
+      <li>
+        <a href="./icons.html">
+          <i class="nc-icon nc-diamond"></i>
+          <p>Icons</p>
+        </a>
+      </li>
+      <li>
+        <a href="./map.html">
+          <i class="nc-icon nc-pin-3"></i>
+          <p>Maps</p>
+        </a>
+      </li>
+      <li>
+        <a href="./notifications.html">
+          <i class="nc-icon nc-bell-55"></i>
+          <p>Notifications</p>
+        </a>
+      </li>
+      <li>
+        <a href="./user.html">
+          <i class="nc-icon nc-single-02"></i>
+          <p>User Profile</p>
+        </a>
+      </li>
+      <li>
+        <a href="./tables.html">
+          <i class="nc-icon nc-tile-56"></i>
+          <p>Table List</p>
+        </a>
+      </li>
+      <li>
+        <a href="./typography.html">
+          <i class="nc-icon nc-caps-small"></i>
+          <p>Typography</p>
+        </a>
+      </li>
+      <li class="active-pro">
+        <a href="./upgrade.html">
+          <i class="nc-icon nc-spaceship"></i>
+          <p>Upgrade to PRO</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

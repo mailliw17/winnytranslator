@@ -1,13 +1,28 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js">
+<script src="{{asset('/js/new/jquery-3.6.0.min.js')}}">
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+<script src="{{asset('/js/new/core/popper.min.js')}}">
+</script>
+
+<script src="{{asset('/js/new/core/bootstrap.min.js')}}">
+</script>
+
+<script src="{{asset('/js/new/fontawesome.min.js')}}">
+</script>
+
+<script src="{{asset('/js/new/plugins/perfect-scrollbar.jquery.min.js')}}">
+</script>
+
+<script src="{{asset('/js/new/paper-dashboard.min.js?v=2.0.1')}}">
+</script>
+
+<script type="text/javascript" src="{{asset('/js/new/datatables.min.js')}}"></script>
+
+<script src="{{asset('/js/new/sweetalert2.all.min.js')}}"></script>
+
+{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous">
-</script>
-
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.4/datatables.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.24/dist/sweetalert2.all.min.js"></script>
+</script> --}}
 
 <script>
   $(document).ready( function () {
