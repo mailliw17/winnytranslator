@@ -12,12 +12,12 @@
 
 </head>
 
-<body>
+<body class="bg-abu">
   {{-- Navbar --}}
   @include('includes.navbar')
 
-  <div class="container-fluid">
-    <div class="row">
+  <div class="container-fluid ">
+    <div class="row ">
 
       {{-- Sidebar --}}
       @include('includes.sidebar')

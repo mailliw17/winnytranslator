@@ -25,6 +25,7 @@ Route::get('/document-chapters/{id}/add-chapter', 'DocumentChapterController@cre
 Route::get('/document-chapters/{id}/note', 'DocumentChapterController@manageNote')->name('document-chapters.note');
 Route::get('/document-chapters/{id}/check', 'DocumentChapterController@check')->name('document-chapters.check');
 Route::get('/payment-translator', 'PaymentTranslatorController@index');
+Route::get('/payment-translator/history', 'PaymentTranslatorController@history')->name('payment-translator.history');
 // Route::get('/payment-translator/info', 'PaymentTranslatorController@info')->name('payment-translator.info');
 Route::get('/withdraw/{id}/check', 'WithdrawController@check')->name('withdraw.check');
 // Route::get('/documents-download/{id}/download', 'DocumentDownloadController@download')->name('documents-download.download');

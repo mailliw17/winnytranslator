@@ -4,42 +4,80 @@
 @section('content')
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-    <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h5>Document Chapters Management (translator)</h5>
-
-        <div class="btn-toolbar mb-2 mb-md-0">
-            {{-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                <span data-feather="calendar"></span>
-                This week
-            </button> --}}
-        </div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+        <h3>Document Chapters</h3>
     </div>
 
     <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-title"><i class="bi bi-card-heading"></i> Document Title :
-                        {{$document->id_title}} / {{$document->ch_title}}
-                    </p>
-
+        <div class="col-md-6">
+            <div class="card card-stats">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="bi bi-journal-text"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">{{$document->id_title}}</p>
+                                <p class="card-title">{{$document->ch_title}}
+                                <p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer ">
+                    <hr>
                 </div>
             </div>
         </div>
 
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-title"><i class="bi bi-bookmark-plus"></i> Created :
-                        @if ($doc_chapter->count() < 1) 0 @else {{$doc_chapter->count()}}
-                            @endif
-                    </p>
+        <div class="col-md-3">
+            <div class="card card-stats">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="bi bi-bookmark"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Created</p>
+                                <p class="card-title"> @if ($doc_chapter->count() < 1) 0 @else {{$doc_chapter->count()}}
+                                        @endif
+                                        <p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                </div>
+            </div>
+        </div>
 
-                    <p class="card-title"><i class="bi bi-check-circle"></i> Finished :
-                        {{$doc_chapter_finished}}
-                    </p>
-
+        <div class="col-md-3">
+            <div class="card card-stats">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="bi bi-check-square"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Finished</p>
+                                <p class="card-title">{{$doc_chapter_finished}}
+                                <p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <hr>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

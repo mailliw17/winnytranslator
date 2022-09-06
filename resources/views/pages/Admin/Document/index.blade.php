@@ -3,17 +3,10 @@
 @section('title', 'WW World | Doc Management')
 @section('content')
 
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-    <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h5>Document Management</h4>
+<main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
-            <div class="btn-toolbar mb-2 mb-md-0">
-                {{-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                    <span data-feather="calendar"></span>
-                    This week
-                </button> --}}
-            </div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+        <h3>Document Management</h3>
     </div>
 
     <div class="row">
@@ -21,8 +14,8 @@
             <div class="card">
                 <div class="card-body">
                     <p class="card-title">Total Document : {{$doc->count()}}</p>
-                    <a href="{{ route('documents.create')}}" class="btn btn-primary btn-sm"><i
-                            class="bi bi-plus-square-dotted"></i> Create New</a>
+                    <a href="{{ route('documents.create')}}" class="btn btn-success "><i
+                            class="bi bi-plus-square-dotted"></i> Create</a>
                 </div>
             </div>
         </div>
@@ -72,7 +65,7 @@
 
                         <a href="{{route('document-chapters.manageChapters', $d->id)}}"
                             class="btn btn-sm btn-warning"><i class="bi bi-kanban"></i> Chapter
-                            Management</a>
+                        </a>
 
                         <form action="{{route('documents.destroy', $d->id)}}" method="POST" class="d-inline"
                             onclick="return confirm('Are you sure?')">
@@ -94,6 +87,7 @@
         </table>
 
     </div>
+
 </main>
 
 @endsection

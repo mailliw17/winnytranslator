@@ -4,11 +4,10 @@
 @section('content')
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-    <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Confirmation</h1>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+        <h3>Confirmation</h3>
     </div>
-    <p style="color: red">*Please Read Carefully</p>
+    <p style="color: red">*Please Read Carefully </p>
 
     <div class="container">
         <form method="POST" action="{{ route('withdraw.update', $check->id)}}">
@@ -80,35 +79,33 @@
                 </div>
             </div>
 
-
-
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <div class="form-group ">
+                    {{-- <div class="form-group "> --}}
                         <label for="payment_method">Salary</label>
                         <input type="text" class="form-control" id="payment_method" name="payment_method"
                             value="{{$check->salary}} ¥" readonly>
-                    </div>
+                        {{--
+                    </div> --}}
                 </div>
 
-                <div class="form-group col-md-4">
-                    <div class="form-group ">
+                <div class="form-group col-md-6">
+                    {{-- <div class="form-group "> --}}
                         <label for="payment_method">Already transferred?</label>
-                        <div class="form-check">
+                        <div class="form-check ml-4">
                             <input class="form-check-input" type="radio" name="transfer_radio" id="no" value="no"
                                 checked onclick="disabledButton()">
-                            <label class="form-check-label" for="exampleRadios1">
-                                Not Yet
-                            </label>
+                            Not Yet
+                            {{-- <span class="form-check-sign"></span> --}}
                         </div>
-                        <div class="form-check">
+                        <div class="form-check ml-4">
                             <input class="form-check-input" type="radio" name="transfer_radio" id="yes" value="yes"
                                 onclick="undisabledButton()">
-                            <label class="form-check-label" for="exampleRadios2">
-                                Yes done !
-                            </label>
+                            Yes Done !
+                            {{-- <span class="form-check-sign"></span> --}}
                         </div>
-                    </div>
+                        {{--
+                    </div> --}}
                 </div>
             </div>
 

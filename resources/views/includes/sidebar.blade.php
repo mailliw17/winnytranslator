@@ -83,69 +83,75 @@
 
 <div class="sidebar" data-color="white" data-active-color="danger">
   <div class="logo">
-    <a href="https://www.creative-tim.com" class="simple-text logo-mini">
+    <a class="simple-text logo-mini">
       <div class="logo-image-small">
         <img src="{{asset('/img/logo-small.png')}}">
       </div>
-      <!-- <p>CT</p> -->
     </a>
     <a class="simple-text logo-normal">
       WW World
-      <!-- <div class="logo-image-big">
-        <img src="../assets/img/logo-big.png">
-      </div> -->
     </a>
+
   </div>
   <div class="sidebar-wrapper">
     <ul class="nav">
-      <li class="active ">
-        <a href="{{ route('documents.index')}}">
-          <i class="nc-book-bookmark"></i>
-          <p>Document Management</p>
+      @if (auth()->user()->role == 1)
+      <li class="{{ Request::is('documents') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('documents.index')}}">
+          <span data-feather="home"></span>
+          <i class="bi bi-file-earmark-text-fill"></i>
+          Document
         </a>
       </li>
-      <li>
-        <a href="./icons.html">
-          <i class="nc-icon nc-diamond"></i>
-          <p>Icons</p>
+      <li class="{{ Request::is('users') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('users.index')}}">
+          <span data-feather="file"></span>
+          <i class="bi bi-person-badge"></i>
+          Users
         </a>
       </li>
-      <li>
-        <a href="./map.html">
-          <i class="nc-icon nc-pin-3"></i>
-          <p>Maps</p>
+      <li class="{{ Request::is('withdraw') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('withdraw.index')}}">
+          <span data-feather="file"></span>
+          <i class="bi bi-currency-exchange"></i>
+          Payroll
         </a>
       </li>
-      <li>
-        <a href="./notifications.html">
-          <i class="nc-icon nc-bell-55"></i>
-          <p>Notifications</p>
+      @endif
+
+      @if (auth()->user()->role == 2)
+      <li class="{{ Request::is('documents-translator') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('documents-translator.index')}}">
+          <span data-feather="file-text"></span>
+          <i class="bi bi-list-task"></i>
+          My Task
         </a>
       </li>
-      <li>
-        <a href="./user.html">
-          <i class="nc-icon nc-single-02"></i>
-          <p>User Profile</p>
+      <li class="{{ Request::is('account-translator') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('account-translator.index')}}">
+          <span data-feather="file-text"></span>
+          <i class="bi bi-person-badge"></i>
+          Account Info
         </a>
       </li>
-      <li>
-        <a href="./tables.html">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>Table List</p>
+      <li class="{{ Request::is('payment-translator') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('payment-translator.index')}}">
+          <span data-feather="file-text"></span>
+          <i class="bi bi-cash-coin"></i>
+          Payment
         </a>
       </li>
-      <li>
-        <a href="./typography.html">
-          <i class="nc-icon nc-caps-small"></i>
-          <p>Typography</p>
-        </a>
-      </li>
-      <li class="active-pro">
+      @endif
+
+      {{-- <li class="active-pro">
         <a href="./upgrade.html">
           <i class="nc-icon nc-spaceship"></i>
           <p>Upgrade to PRO</p>
         </a>
-      </li>
+      </li> --}}
+
     </ul>
   </div>
 </div>
+{{--
+</body> --}}

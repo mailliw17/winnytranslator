@@ -68,7 +68,7 @@ class PaymentTranslatorController extends Controller
                 $current_date = date('Y-m-d');
                 $day = Carbon::parse($current_date)->format('l'); //only show day output
 
-                if ($day == 'Friday') {
+                if ($day == 'Wednesday') {
                     $payment_period = 1;
                 } else {
                     $payment_period = 0;
@@ -208,5 +208,27 @@ class PaymentTranslatorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function history()
+    {
+        $user = Auth::user();
+
+        // send data to hidden button when any transaction is active
+        $payroll = DB::table('withdraw_histories')
+            ->join('user_payments', 'withdraw_histories.user_payment_id', '=', 'user_payments.id')
+            ->join('users', 'user_payments.user_id', '=', 'users.id')
+            ->select('user_payments.user_id as user_id', 'withdraw_histories.status as status', 'withdraw_histories.salary as salary', 'users.name as name', 'user_payments.id', 'withdraw_histories.number_words_wd', 'withdraw_histories.id as withdraw_id', 'withdraw_histories.updated_at as paid_on', 'withdraw_histories.created_at as created_at')
+            ->orderBy('created_at', 'desc')
+            ->where('user_id', '=', $user->id)
+            ->get();
+
+        // dd($payroll);
+
+        return view('pages.translator.payment.history')->with(
+            [
+                'payroll' => $payroll
+            ]
+        );
     }
 }

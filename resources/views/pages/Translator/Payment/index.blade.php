@@ -4,40 +4,60 @@
 @section('content')
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-    <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Payment</h1>
-
-        {{-- <a href="{{route('payment-translator.info')}}" class="btn btn-primary"><i class="bi bi-cash-coin"></i>
-            Info</a> --}}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+        <h3>Payment</h3>
     </div>
 
-    <div class="alert alert-success" role="alert">
-        <h4 class="alert-heading">Congrats, this is your achievement !</h4>
+    <div class="text-right mt-0">
+        <a href="{{route('payment-translator.history')}}" class="btn btn-info"><i class="bi bi-clock-history"></i>
+            History </a>
+    </div>
+
+    <blockquote class="blockquote">
+        <p>Withdrawal Rules </p>
+        <ul>
+            <li>Your previous balance withdrawal must be confirmed by admin</li>
+            <li>Your withdrawal time category must match your profile (weekly/monthly)</li>
+            <li>Chapters you've already worked on should still be open for payment by admin</li>
+        </ul>
+        <p>Contact your admin for more information</p>
+    </blockquote>
+
+    {{-- <div class="alert alert-success" role="alert"> --}}
         <div class="row">
             <div class="col-md-4">
-                <ul class="list-group">
-                    <li class="list-group-item"> Total Chapter : {{$total_income[0]->total_doc}}</li>
-                    <li class="list-group-item">Total Words : {{($total_income[0]->total_number_words == null) ? '0' :
-                        $total_income[0]->total_number_words}} </li>
-                    <li class="list-group-item">Total Income : {{($total_income[0]->total_cost_of_translate == null) ?
-                        '0' :
-                        $total_income[0]->total_cost_of_translate }} ¥</li>
-                </ul>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-wallet2"></i> Total Balance</h5>
+
+                        {{-- <p class="card-text">Total income you will get</p> --}}
+                        <ul class="list-group">
+                            <li class="list-group-item"> {{$total_income[0]->total_doc}} Chapter</li>
+                            <li class="list-group-item"> {{($total_income[0]->total_number_words == null) ?
+                                '0' :
+                                $total_income[0]->total_number_words}} Words</li>
+                            <li class="list-group-item">{{($total_income[0]->total_cost_of_translate ==
+                                null) ?
+                                '0' :
+                                $total_income[0]->total_cost_of_translate }} ¥</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Balance Locked</h5>
-                        <p class="card-text">The income is still locked because the payment is being taken care of by
-                            admin</p>
+                        <h5 class="card-title"><i class="bi bi-lock"></i> Locked Balance</h5>
+                        {{-- <p class="card-text">The income is still locked because the payment is being taken care of
+                            by
+                            admin</p> --}}
                         <ul class="list-group">
-                            <li class="list-group-item"> {{$total_income_locked[0]->total_doc}} Chapters</li>
+                            <li class="list-group-item"> {{$total_income_locked[0]->total_doc}} Chapter</li>
                             <li class="list-group-item"> {{($total_income_locked[0]->total_number_words ==
                                 null) ?
                                 '0 words' :
                                 $total_income_locked[0]->total_number_words}} words</li>
-                            <li class="list-group-item"> Income :
+                            <li class="list-group-item">
                                 {{($total_income_locked[0]->total_cost_of_translate ==
                                 null) ?
                                 '0' :
@@ -50,17 +70,17 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Withdrawable Balance</h5>
-                        <p class="card-text">You can withdraw this balance <br> to your bank account</p>
+                        <h5 class="card-title"><i class="bi bi-cash"></i> Withdrawable Balance</h5>
+                        {{-- <p class="card-text">You can withdraw this balance <br> to your bank account</p> --}}
                         <ul class="list-group">
-                            <li class="list-group-item"> {{$total_income_withdrawalable[0]->total_doc}} Chapters
+                            <li class="list-group-item"> {{$total_income_withdrawalable[0]->total_doc}} Chapter
                             </li>
                             <li class="list-group-item">
                                 {{($total_income_withdrawalable[0]->total_number_words ==
                                 null) ?
                                 '0 Words' :
                                 $total_income_withdrawalable[0]->total_number_words}} Words</li>
-                            <li class="list-group-item"> Income :
+                            <li class="list-group-item">
                                 {{($total_income_withdrawalable[0]->total_cost_of_translate ==
                                 null) ?
                                 '0' :
@@ -70,26 +90,18 @@
                 </div>
             </div>
         </div>
-        {{-- <p>{{$disabled_button}} == 1</p> --}}
-        {{-- <p>{{$total_income_withdrawalable[0]->total_doc}} == 0</p> --}}
-        {{-- <p>{{$payment_period}} == 1</p> --}}
-
-        {{-- $disabled_button = ada transaksi dia sebelumnya yang belum di ACC admin --}}
-        {{-- $payment_period = belum waktunya dia gajian --}}
-        {{-- $total_income_withdrawalable[0]->total_doc = tidak ada bab yang mau dicairkan --}}
 
         @if (($disabled_button == 1) || ($payment_period == 0) || $total_income_withdrawalable[0]->total_doc == 0)
 
         {{-- disabled button --}}
-        <div class="text-right mt-4">
-            <button data-toggle="modal" data-target="#disabledWithdrawModal" class="btn btn-secondary"><i
-                    class="bi bi-wallet-fill"></i>
+        <div class="text-right ">
+            <button class="btn btn-secondary"><i class="bi bi-wallet-fill"></i>
                 Withdraw</button>
         </div>
 
         @else
         {{-- active button --}}
-        <div class="text-right mt-4">
+        <div class="text-right">
             <a href="{{route('withdraw-translator.create')}}" class="btn btn-success"><i class="bi bi-wallet-fill"></i>
                 Withdraw</a>
         </div>
@@ -97,7 +109,7 @@
         @endif
 
         <!-- Modal -->
-        <div class="modal fade" id="disabledWithdrawModal" tabindex="-1" role="dialog"
+        {{-- <div class="modal fade" id="disabledWithdrawModal" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -122,10 +134,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
-    </div>
+        {{--
+    </div> --}}
 
 
 </main>

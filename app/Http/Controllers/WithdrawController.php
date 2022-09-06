@@ -20,7 +20,8 @@ class WithdrawController extends Controller
         $payroll = DB::table('withdraw_histories')
             ->join('user_payments', 'withdraw_histories.user_payment_id', '=', 'user_payments.id')
             ->join('users', 'user_payments.user_id', '=', 'users.id')
-            ->select('user_payments.user_id as user_id', 'withdraw_histories.status as status', 'withdraw_histories.salary as salary', 'users.name as name', 'user_payments.id', 'withdraw_histories.number_words_wd', 'withdraw_histories.id as withdraw_id', 'withdraw_histories.updated_at as paid_on')
+            ->select('user_payments.user_id as user_id', 'withdraw_histories.status as status', 'withdraw_histories.salary as salary', 'users.name as name', 'user_payments.id', 'withdraw_histories.number_words_wd', 'withdraw_histories.id as withdraw_id', 'withdraw_histories.updated_at as paid_on', 'withdraw_histories.created_at as created_at')
+            ->orderBy('created_at', 'desc')
             // ->where('status', '=', '0')
             ->get();
 

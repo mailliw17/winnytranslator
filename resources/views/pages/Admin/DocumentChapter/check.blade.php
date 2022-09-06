@@ -155,7 +155,7 @@
                 </div>
 
                 <div class="text-center">
-                    <button type="submit" class="btn btn-block btn-primary">
+                    <button type="submit" class="btn btn-block btn-success">
                         Submit</button>
                 </div>
         </form>

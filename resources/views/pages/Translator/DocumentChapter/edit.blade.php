@@ -5,6 +5,10 @@
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+        <h3>Task Translate</h3>
+    </div>
+
     <div class="container">
         <form method="POST" action="{{ route('document-chapters-translator.update', $doc_chap->id)}}">
             @method('PUT')
@@ -103,7 +107,7 @@
 
                 <hr>
 
-                <button type="submit" class="btn btn-block btn-sm btn-primary">Save</button>
+                <button type="submit" class="btn btn-block  btn-success">Save</button>
         </form>
     </div>
 

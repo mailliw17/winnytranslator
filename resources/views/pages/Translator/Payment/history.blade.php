@@ -13,18 +13,15 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Name</th>
                     <th>Salary</th>
                     <th>Number of Words</th>
                     <th>Status</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($payroll as $p)
                 <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td>{{$p->name}}</td>
                     <td>{{$p->salary}}¥</td>
                     <td>{{$p->number_words_wd}}</td>
                     <td>
@@ -35,15 +32,6 @@
                         @else
                         <span class="badge badge-danger">Unpaid</span>
                         @endif
-                    </td>
-                    <td>
-                        @if ($p->status == 10)
-                        <p>No actions</p>
-                        @else
-                        <a href="{{route('withdraw.check', $p->withdraw_id)}}" class="btn btn-sm btn-primary"><i
-                                class="bi bi-wallet2"></i> Pay</a>
-                        @endif
-
                     </td>
                 </tr>
                 @empty
