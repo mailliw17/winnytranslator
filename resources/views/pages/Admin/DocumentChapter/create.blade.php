@@ -95,42 +95,6 @@
 
         });
 
-        // Swal.fire({
-        //     title: 'Are you sure?',
-        //     text: "You won't be able to revert this!",
-        //     icon: 'warning',
-        //     showCancelButton: true,
-        //     confirmButtonColor: '#3085d6',
-        //     cancelButtonColor: '#d33',
-        //     confirmButtonText: 'Yes, delete it!'
-        //     }).then((result) => {
-        //     if (result.isConfirmed) {
-        //         Swal.fire(
-        //         'Deleted!',
-        //         'Your file has been deleted.',
-        //         'success'
-        //         )
-        //     }
-        // })
-
-        // $('#ch_chapter_title').keyup(function () {
-            
-        //     var ch_chapter_title = $(this).val();
-        //     console.log(ch_chapter_title);
-
-        //     $.ajax({
-        //         type: 'POST',
-        //         url: '/document-chapters/check-same-title',
-        //         data: {ch_chapter_title: ch_chapter_title},
-        //         success: function(data){
-        //            if(data == 0){
-        //                alert('aman');
-        //            } else {
-        //                alert('judul sudah ada');
-        //            }
-        //         } 
-        //     });
-        // });
     });
 </script>
 

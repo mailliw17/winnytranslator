@@ -164,7 +164,7 @@
                                     {{-- START BUTTON ADMIN --}}
                                     @if (auth()->user()->role == 1)
 
-                                    {{-- if document chapter Acc --}}
+                                    {{-- IF DOC_CHAP PENDING --}}
                                     @if ($dc->status == 0)
                                     <a href="{{route('document-chapters.edit', $dc->id)}}"
                                         class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i> Edit</a>
@@ -210,11 +210,18 @@
                                     @endif
 
 
-                                    {{-- only show button when status is submited --}}
+                                    {{-- IF DOC_CHAP SUBMITTED --}}
                                     @if ($dc->status == "2")
                                     <a href="{{route('document-chapters.check', $dc->id)}}"
                                         class="btn btn-sm btn-success"><i class="bi bi-spellcheck"></i> Check</a>
                                     @endif
+
+                                    {{-- IF DOC_CHAP FINISH TRANSLATED --}}
+                                    @if ($dc->status == "10")
+                                    <a href="{{route('documents-download.download', $dc->id)}}"
+                                        class="btn btn-sm btn-primary"><i class="bi bi-download"></i> Download</a>
+                                    @endif
+
                                     @endif
                                     {{-- END OF BUTTON ADMIN --}}
                                 </td>

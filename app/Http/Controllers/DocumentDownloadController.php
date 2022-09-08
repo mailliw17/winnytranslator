@@ -108,26 +108,22 @@ class DocumentDownloadController extends Controller
     {
         // dd($id);
         $doc_chapter = DB::table('document_chapters')
-            ->leftJoin('users', 'users.id', '=', 'document_chapters.user_id')
-            ->select('document_chapters.*', 'users.id as user_id', 'users.name as name')
-            ->where('document_id', '=', $id)
+            ->select('document_chapters.*')
+            ->where('id', '=', $id)
             ->where('status', '=', '10')
-            ->get();
+            ->first();
 
-        return view('pages.admin.documentchapterdownload.index')->with(
-            [
-                'doc_chapter' => $doc_chapter
-            ]
-        );
+        // dd($doc_chapter->id_chapter_title);
 
-        // dd($doc_chapter);
-        // $judul = $doc_chapter[0]->id_chapter_title;
-        // $phpWord = new \PhpOffice\PhpWord\PhpWord();
-        // $section = $phpWord->addSection();
-        // $text = $section->addText($doc_chapter[0]->id_chapter_title, array('name' => 'Arial', 'size' => 20, 'bold' => true));
-        // $text = $section->addText($doc_chapter[0]->ch_text);
-        // $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        // $objWriter->save($judul . '.docx');
-        // return response()->download(public_path($judul . '.docx'));
+        $judul = $doc_chapter->id_chapter_title;
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection();
+        $text = $section->addText($doc_chapter->ch_chapter_title, array('name' => 'Arial', 'size' => 20, 'bold' => true));
+        $text = $section->addText($doc_chapter->id_chapter_title, array('name' => 'Arial', 'size' => 20, 'bold' => true));
+        $text = $section->addText($doc_chapter->ch_text);
+        $text = $section->addText($doc_chapter->id_text);
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save($judul . '.docx');
+        return response()->download(public_path($judul . '.docx'));
     }
 }

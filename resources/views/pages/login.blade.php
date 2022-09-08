@@ -2,106 +2,107 @@
 <html lang="en">
 
 <head>
+  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-  <meta name="generator" content="Hugo 0.88.1">
-  <title>Login - WW World</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-  <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/sign-in/">
+  {{--
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
 
+  <link rel="stylesheet" href="css/owl.carousel.min.css"> --}}
 
+  <!-- Bootstrap CSS -->
+  <link href="{{asset('/css/new/bootstrap.min.css')}}" rel="stylesheet">
 
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+  <!-- Style -->
+  <link href="{{asset('/css/new/login.css')}}" rel="stylesheet">
 
-  <link rel="stylesheet" href="{{asset('/css/signin.css')}}">
-
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
-
-
-  <!-- Custom styles for this template -->
-  <link href="signin.css" rel="stylesheet">
+  <title>Login</title>
 </head>
 
-<body class="text-center">
+<body class="">
+  <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 order-md-2">
+          <img src="{{asset('/img/translator.svg')}}" alt="Image" class="img-fluid" width="75%">
+        </div>
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="mb-4">
+                <h3>Login to <strong>WW World</strong></h3>
+                <p class="mb-4">
+                  WW World Translation Management Platform</p>
+              </div>
+              <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="form-group first mt-5">
+                  <label for="username">Username</label>
+                  <input type="text" class="form-control " id="username" name="username" autocomplete="off" required>
+                </div>
 
+                <div class="form-group last mt-5">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="password" name="password" required>
+                </div>
 
-  <form method="POST" action="{{ route('login') }}" class="form-signin">
-    @csrf
-    <img class="mb-4"
-      src="https://fscl01.fonpit.de/userfiles/6727621/image/2016/HeroS-random/google-translate-hero-2-w810h462.jpg"
-      alt="" width="200" height="100">
+                {{-- <div class="d-flex mb-5 align-items-center">
+                  <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
+                    <input type="checkbox" checked="checked" />
+                    <div class="control__indicator"></div>
+                  </label>
+                  <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
+                </div> --}}
 
-    <h5 class="">Welcome to WW World</h5>
+                @if (session()->has('loginError'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  Username or password is wrong
+                  <strong>Please try again !</strong>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                @endif
 
-    @if (session()->has('loginError'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      Username or password is wrong
-      <strong>Please try again !</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    @endif
+                <input type="submit" value="Login" class="btn text-white btn-block btn-primary mt-5">
 
-    <div>
-      <label for="username" class="sr-only">username</label>
-      <input type="text" name="username" class="form-control @error('username') is-invalid
-    @enderror" placeholder="Username" autofocus>
-      @error('username')
-      <div class="invalid-feedback">
-        {{ $message }}
+                {{-- <span class="d-block text-left my-4 text-muted"> or sign in with</span> --}}
+
+                {{-- <div class="social-login">
+                  <a href="#" class="facebook">
+                    <span class="icon-facebook mr-3"></span>
+                  </a>
+                  <a href="#" class="twitter">
+                    <span class="icon-twitter mr-3"></span>
+                  </a>
+                  <a href="#" class="google">
+                    <span class="icon-google mr-3"></span>
+                  </a>
+                </div> --}}
+              </form>
+            </div>
+          </div>
+
+        </div>
+
       </div>
-      @enderror
     </div>
-
-    <br>
-
-    <div>
-      <label for="password" class="sr-only">Password</label>
-      <input type="password" name="password" class="form-control @error('password') is-invalid
-    @enderror" placeholder="Password">
-      @error('password')
-      <div class="invalid-feedback">
-        {{ $message }}
-      </div>
-      @enderror
-    </div>
-    <hr>
-
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-
-    <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
-  </form>
+  </div>
 
 
+  <script src="{{asset('/js/new/jquery-3.6.0.min.js')}}">
+  </script>
 
+  <script src="{{asset('/js/new/core/popper.min.js')}}">
+  </script>
+
+  <script src="{{asset('/js/new/core/bootstrap.min.js')}}">
+  </script>
+
+  <script src="{{asset('/js/new/login.js')}}">
+  </script>
 </body>
 
 </html>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous">
-</script>
