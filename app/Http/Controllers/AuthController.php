@@ -116,4 +116,19 @@ class AuthController extends Controller
         $request->session()->flash('success-update-password', 'Password Changed');
         return redirect()->route('users.index');
     }
+
+    // this routing is for condition where user hardcode URL login, but them have login
+    public function checkRedirect()
+    {
+        $role = auth()->user()->role;
+        // dd($role);
+        switch ($role) {
+            case 1:
+                return redirect()->route('documents.index');
+                break;
+            case 2:
+                return redirect()->route('documents-translator.index');
+                break;
+        };
+    }
 }

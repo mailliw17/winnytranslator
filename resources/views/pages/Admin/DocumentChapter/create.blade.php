@@ -48,10 +48,8 @@
 
 
                     <div class="col">
-                        <label for="number_words"> <a
-                                href="https://www.chineseconverter.com/en/convert/chinese-character-count"
-                                target="_blank"> Total
-                                Characters</a></label>
+                        <label for="number_words"> Total
+                            Characters</a></label>
                         <input type="number" autocomplete="off" class="form-control @error('number_words') is-invalid
                         @enderror" id="number_words" name="number_words" value="{{old('number_words')}}" readonly>
                         @error('number_words')
@@ -87,15 +85,16 @@
 
 <script>
     $(document).ready(function () {
-        $('#ch_text').keyup(function () {
-            var text = $(this).val();
-            var textTrim = text.trim();
-            var wordCount = textTrim.split(/[\u00ff-\uffff]|\S+/g).length - 1;
-            $('#number_words').attr("value", wordCount)
-
-        });
-
+    $("#ch_text").keyup(function () {
+      var text = $(this).val();
+      var textTrim = text.trim();
+      var wordCount =
+        textTrim.split(
+          /[\u4E00-\u9FAF\u3040-\u3096\u30A1-\u30FA\uFF66-\uFF9D\u31F0-\u31FF]/g
+        ).length - 1;
+      $("#number_words").attr("value", wordCount);
     });
+  });
 </script>
 
 @endsection

@@ -236,11 +236,11 @@
                                         <input type="hidden" name="document_id" value="{{$dc->document_id}}">
                                         <input type="hidden" name="is_vendor_paid" value=1>
 
-                                        <button class="btn btn-sm btn-success"><i class="bi bi-wallet2"></i> PAID
-                                            OFF</button>
+                                        <button class="btn btn-sm btn-success"><i class="bi bi-wallet2"></i>
+                                            PAY</button>
                                     </form>
                                     @elseif(($dc->status == "10")&&($dc->is_vendor_paid == 1))
-                                    <p><span class="badge badge-pill badge-success">Paid Off</span></p>
+                                    <p><span class="badge badge-pill badge-light">Paid</span></p>
                                     @else
 
                                     @endif
