@@ -17,14 +17,21 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        // return UserPayment::with('user')->get();
-        $data = UserPayment::with('user')->get();
+        $role = auth()->user()->role;
 
-        return view('pages.admin.payment.index')->with(
-            [
-                'user_payments' => $data
-            ]
-        );
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            // return UserPayment::with('user')->get();
+            $data = UserPayment::with('user')->get();
+
+            return view('pages.admin.payment.index')->with(
+                [
+                    'user_payments' => $data
+                ]
+            );
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -67,13 +74,20 @@ class PaymentController extends Controller
      */
     public function edit($id)
     {
-        $user = UserPayment::findOrFail($id);
+        $role = auth()->user()->role;
 
-        return view('pages.admin.payment.edit')->with(
-            [
-                'user' => $user
-            ]
-        );
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            $user = UserPayment::findOrFail($id);
+
+            return view('pages.admin.payment.edit')->with(
+                [
+                    'user' => $user
+                ]
+            );
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -85,16 +99,23 @@ class PaymentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'payment_method' => 'required',
-            'account_info' => 'required',
-            'price' => 'required|int',
-        ]);
+        $role = auth()->user()->role;
 
-        $user = UserPayment::findOrFail($id);
-        $user->update($validatedData);
-        // $request->session()->flash('success-edit', 'Edit User Successfully');
-        return redirect()->route('payments.index');
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            $validatedData = $request->validate([
+                'payment_method' => 'required',
+                'account_info' => 'required',
+                'price' => 'required|int',
+            ]);
+
+            $user = UserPayment::findOrFail($id);
+            $user->update($validatedData);
+            // $request->session()->flash('success-edit', 'Edit User Successfully');
+            return redirect()->route('payments.index');
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**

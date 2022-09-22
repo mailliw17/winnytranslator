@@ -17,14 +17,21 @@ class UserController extends Controller
      */
     public function index()
     {
-        $translators = User::where('role', '=', 2)->get();
-        $admin = User::where('role', '=', 1)->get();
-        return view('pages.admin.user.index')->with(
-            [
-                'translators' => $translators,
-                'admin' => $admin
-            ]
-        );
+        $role = auth()->user()->role;
+
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            $translators = User::where('role', '=', 2)->get();
+            $admin = User::where('role', '=', 1)->get();
+            return view('pages.admin.user.index')->with(
+                [
+                    'translators' => $translators,
+                    'admin' => $admin
+                ]
+            );
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -56,20 +63,27 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        // to get user dan user_payment info
-        $user_info_all = DB::table('users')
-            ->join('user_payments', 'user_payments.user_id', '=', 'users.id')
-            ->select('user_payments.*', 'users.*')
-            ->where('users.id', '=', $id)
-            ->first();
+        $role = auth()->user()->role;
 
-        // dd($user_info_all);
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            // to get user dan user_payment info
+            $user_info_all = DB::table('users')
+                ->join('user_payments', 'user_payments.user_id', '=', 'users.id')
+                ->select('user_payments.*', 'users.*')
+                ->where('users.id', '=', $id)
+                ->first();
 
-        return view('pages.admin.user.show')->with(
-            [
-                'user' => $user_info_all
-            ]
-        );
+            // dd($user_info_all);
+
+            return view('pages.admin.user.show')->with(
+                [
+                    'user' => $user_info_all
+                ]
+            );
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -80,20 +94,27 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        // to get user dan user_payment info
-        $user_info_all = DB::table('users')
-            ->join('user_payments', 'user_payments.user_id', '=', 'users.id')
-            ->select('user_payments.*', 'users.*')
-            ->where('users.id', '=', $id)
-            ->first();
+        $role = auth()->user()->role;
 
-        // dd($user_info_all);
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            // to get user dan user_payment info
+            $user_info_all = DB::table('users')
+                ->join('user_payments', 'user_payments.user_id', '=', 'users.id')
+                ->select('user_payments.*', 'users.*')
+                ->where('users.id', '=', $id)
+                ->first();
 
-        return view('pages.admin.user.edit')->with(
-            [
-                'user' => $user_info_all
-            ]
-        );
+            // dd($user_info_all);
+
+            return view('pages.admin.user.edit')->with(
+                [
+                    'user' => $user_info_all
+                ]
+            );
+        } else {
+            return redirect()->back();
+        }
     }
 
 
@@ -107,38 +128,45 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // take UUID from id(user table) to id_user (user_payments table)
-        $request['user_id'] =  $request['id'];
+        $role = auth()->user()->role;
 
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'username' => 'required|min:3',
-            'email' => 'required|email:dns',
-            'phone' => 'required',
-            'role' => 'required',
-            // for payment info
-            'user_id' => 'required',
-            'payment_method' => 'required',
-            'account_info' => 'required',
-            'account_name' => 'required',
-            'price' => 'required',
-            'payment_period' => 'required'
-        ]);
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            // take UUID from id(user table) to id_user (user_payments table)
+            $request['user_id'] =  $request['id'];
 
-        $user = User::findOrFail($id);
-        $user->update($validatedData);
-
-        // update user_payment information
-        UserPayment::where('user_id', $id)
-            ->update([
-                'payment_method' => $validatedData['payment_method'],
-                'account_name' => $validatedData['account_name'],
-                'account_info' => $validatedData['account_info'],
-                'price' => $validatedData['price'],
-                'payment_period' => $validatedData['payment_period']
+            $validatedData = $request->validate([
+                'name' => 'required|max:255',
+                'username' => 'required|min:3',
+                'email' => 'required|email:dns',
+                'phone' => 'required',
+                'role' => 'required',
+                // for payment info
+                'user_id' => 'required',
+                'payment_method' => 'required',
+                'account_info' => 'required',
+                'account_name' => 'required',
+                'price' => 'required',
+                'payment_period' => 'required'
             ]);
-        $request->session()->flash('success-edit', 'Edit User Successfully');
-        return redirect()->route('users.index');
+
+            $user = User::findOrFail($id);
+            $user->update($validatedData);
+
+            // update user_payment information
+            UserPayment::where('user_id', $id)
+                ->update([
+                    'payment_method' => $validatedData['payment_method'],
+                    'account_name' => $validatedData['account_name'],
+                    'account_info' => $validatedData['account_info'],
+                    'price' => $validatedData['price'],
+                    'payment_period' => $validatedData['payment_period']
+                ]);
+            $request->session()->flash('success-edit', 'Edit User Successfully');
+            return redirect()->route('users.index');
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -149,12 +177,19 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $item = User::findOrFail($id);
-        $item->delete();
+        $role = auth()->user()->role;
 
-        // delete user and delete user_payment
-        UserPayment::where('user_id', $id)->delete();
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            $item = User::findOrFail($id);
+            $item->delete();
 
-        return redirect()->route('users.index');
+            // delete user and delete user_payment
+            UserPayment::where('user_id', $id)->delete();
+
+            return redirect()->route('users.index');
+        } else {
+            return redirect()->back();
+        }
     }
 }

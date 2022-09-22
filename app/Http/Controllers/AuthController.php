@@ -52,69 +52,97 @@ class AuthController extends Controller
 
     public function registerPage()
     {
-        return view('pages.admin.auth.register');
+        $role = auth()->user()->role;
+
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            return view('pages.admin.auth.register');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function register(Request $request)
     {
-        // generate UUID for user
-        $request['id'] =  Uuid::uuid4()->toString();
+        $role = auth()->user()->role;
 
-        // take UUID from id(user table) to id_user (user_payments table)
-        $request['user_id'] =  $request['id'];
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            // generate UUID for user
+            $request['id'] =  Uuid::uuid4()->toString();
 
-        $validatedData = $request->validate(
-            [
-                'id' => 'required',
-                'name' => 'required|max:255',
-                'username' => 'required|unique:users|min:3',
-                'email' => 'required|email:dns',
-                'phone' => 'required',
-                'password' => 'required|min:3',
-                'role' => 'required',
-                // for payment info
-                'user_id' => 'required',
-                'payment_method' => 'required',
-                'account_info' => 'required',
-                'account_name' => 'required',
-                'price' => 'required',
-                'payment_period' => 'required'
-            ]
-        );
+            // take UUID from id(user table) to id_user (user_payments table)
+            $request['user_id'] =  $request['id'];
 
-        $validatedData['password'] = Hash::make($validatedData['password']);
+            $validatedData = $request->validate(
+                [
+                    'id' => 'required',
+                    'name' => 'required|max:255',
+                    'username' => 'required|unique:users|min:3',
+                    'email' => 'required|email:dns',
+                    'phone' => 'required',
+                    'password' => 'required|min:3',
+                    'role' => 'required',
+                    // for payment info
+                    'user_id' => 'required',
+                    'payment_method' => 'required',
+                    'account_info' => 'required',
+                    'account_name' => 'required',
+                    'price' => 'required',
+                    'payment_period' => 'required'
+                ]
+            );
 
-        User::create($validatedData);
-        UserPayment::create($validatedData);
-        $request->session()->flash('success', 'Registration User Successfully');
-        return redirect()->route('users.index');
+            $validatedData['password'] = Hash::make($validatedData['password']);
+
+            User::create($validatedData);
+            UserPayment::create($validatedData);
+            $request->session()->flash('success', 'Registration User Successfully');
+            return redirect()->route('users.index');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function showChangePasswordForm($id)
     {
-        $user = User::findOrFail($id);
+        $role = auth()->user()->role;
 
-        return view('pages.admin.user.forgotpassword')->with(
-            [
-                'user' => $user
-            ]
-        );
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            $user = User::findOrFail($id);
+
+            return view('pages.admin.user.forgotpassword')->with(
+                [
+                    'user' => $user
+                ]
+            );
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function updatePassword(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'newpassword' => 'required|min:3|same:password_confirmation',
-            'password_confirmation' => 'required|min:3',
-        ]);
+        $role = auth()->user()->role;
 
-        $validatedData['newpassword'] = Hash::make($validatedData['newpassword']);
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            $validatedData = $request->validate([
+                'newpassword' => 'required|min:3|same:password_confirmation',
+                'password_confirmation' => 'required|min:3',
+            ]);
 
-        $data = User::findOrFail($id);
-        $data->password = $validatedData['newpassword'];
-        $data->save();
-        $request->session()->flash('success-update-password', 'Password Changed');
-        return redirect()->route('users.index');
+            $validatedData['newpassword'] = Hash::make($validatedData['newpassword']);
+
+            $data = User::findOrFail($id);
+            $data->password = $validatedData['newpassword'];
+            $data->save();
+            $request->session()->flash('success-update-password', 'Password Changed');
+            return redirect()->route('users.index');
+        } else {
+            return redirect()->back();
+        }
     }
 
     // this routing is for condition where user hardcode URL login, but them have login

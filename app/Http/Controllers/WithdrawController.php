@@ -16,22 +16,29 @@ class WithdrawController extends Controller
      */
     public function index()
     {
-        // send data to hidden button when any transaction is active
-        $payroll = DB::table('withdraw_histories')
-            ->join('user_payments', 'withdraw_histories.user_payment_id', '=', 'user_payments.id')
-            ->join('users', 'user_payments.user_id', '=', 'users.id')
-            ->select('user_payments.user_id as user_id', 'withdraw_histories.status as status', 'withdraw_histories.salary as salary', 'users.name as name', 'user_payments.id', 'withdraw_histories.number_words_wd', 'withdraw_histories.id as withdraw_id', 'withdraw_histories.updated_at as paid_on', 'withdraw_histories.created_at as created_at')
-            ->orderBy('created_at', 'desc')
-            // ->where('status', '=', '0')
-            ->get();
+        $role = auth()->user()->role;
 
-        // dd($payroll);
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            // send data to hidden button when any transaction is active
+            $payroll = DB::table('withdraw_histories')
+                ->join('user_payments', 'withdraw_histories.user_payment_id', '=', 'user_payments.id')
+                ->join('users', 'user_payments.user_id', '=', 'users.id')
+                ->select('user_payments.user_id as user_id', 'withdraw_histories.status as status', 'withdraw_histories.salary as salary', 'users.name as name', 'user_payments.id', 'withdraw_histories.number_words_wd', 'withdraw_histories.id as withdraw_id', 'withdraw_histories.updated_at as paid_on', 'withdraw_histories.created_at as created_at')
+                ->orderBy('created_at', 'desc')
+                // ->where('status', '=', '0')
+                ->get();
 
-        return view('pages.admin.withdraw.index')->with(
-            [
-                'payroll' => $payroll
-            ]
-        );
+            // dd($payroll);
+
+            return view('pages.admin.withdraw.index')->with(
+                [
+                    'payroll' => $payroll
+                ]
+            );
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -79,22 +86,29 @@ class WithdrawController extends Controller
 
     public function check($id)
     {
-        // only select required data
-        $check = DB::table('withdraw_histories')
-            ->join('user_payments', 'withdraw_histories.user_payment_id', '=', 'user_payments.id')
-            ->join('users', 'user_payments.user_id', '=', 'users.id')
-            ->select('withdraw_histories.*', 'user_payments.user_id', 'user_payments.price', 'user_payments.payment_method', 'user_payments.account_info', 'user_payments.account_name', 'users.name', 'users.email', 'users.phone')
-            ->where('withdraw_histories.status', '=', '0')
-            ->where('withdraw_histories.id', '=', $id)
-            ->first();
+        $role = auth()->user()->role;
 
-        // dd($check);
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            // only select required data
+            $check = DB::table('withdraw_histories')
+                ->join('user_payments', 'withdraw_histories.user_payment_id', '=', 'user_payments.id')
+                ->join('users', 'user_payments.user_id', '=', 'users.id')
+                ->select('withdraw_histories.*', 'user_payments.user_id', 'user_payments.price', 'user_payments.payment_method', 'user_payments.account_info', 'user_payments.account_name', 'users.name', 'users.email', 'users.phone')
+                ->where('withdraw_histories.status', '=', '0')
+                ->where('withdraw_histories.id', '=', $id)
+                ->first();
 
-        return view('pages.admin.withdraw.check')->with(
-            [
-                'check' => $check
-            ]
-        );
+            // dd($check);
+
+            return view('pages.admin.withdraw.check')->with(
+                [
+                    'check' => $check
+                ]
+            );
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -106,14 +120,21 @@ class WithdrawController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'status' => 'required|int'
-        ]);
+        $role = auth()->user()->role;
 
-        $doc_chap = WithdrawHistory::findOrFail($id);
-        $doc_chap->update($validatedData);
+        // SECURE ADMIN ROUTING
+        if ($role == 1) {
+            $validatedData = $request->validate([
+                'status' => 'required|int'
+            ]);
 
-        return redirect()->route('withdraw.index');
+            $doc_chap = WithdrawHistory::findOrFail($id);
+            $doc_chap->update($validatedData);
+
+            return redirect()->route('withdraw.index');
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**

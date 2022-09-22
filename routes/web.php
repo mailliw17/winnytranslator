@@ -64,7 +64,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     // POST
     Route::post('/register', 'AuthController@register');
-
     Route::post('/logout', 'AuthController@logout')->name('logout');
     Route::post('/document-chapters/check-title', 'DocumentChapterController@checkSameTitle')->name('document-chapters.check-same-title');
 });

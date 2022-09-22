@@ -20,6 +20,16 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             return redirect(RouteServiceProvider::HOME);
+
+            dd('hai udh login');
+
+            if (Auth::user()->role == 1) {
+                return redirect()->route('/documents');
+            }
+
+            if (Auth::user()->role == 2) {
+                return redirect()->route('/account-translator');
+            }
         }
 
         return $next($request);
