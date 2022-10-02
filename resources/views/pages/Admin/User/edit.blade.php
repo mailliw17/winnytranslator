@@ -41,7 +41,8 @@
                 <div class="form-group col-md-6">
                     <label for="email">Email</label>
                     <input type="email" class="form-control @error('email') is-invalid
-                    @enderror" id="email" name="email" value="{{old('email') ? old('email') : $user->email }}">
+                    @enderror" id="email" name="email" value="{{old('email') ? old('email') : $user->email }}"
+                        readonly>
                     @error('email')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -60,27 +61,18 @@
                 </div>
             </div>
 
-            <div class="form-row">
+            {{-- <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="role">Role</label>
-                    <select class="form-control @error('role') is-invalid
-                    @enderror" id="role" name="role">
-                        {{-- set select input dynamicly with dummy way --}}
-                        @if ($user->role == 2)
-                        <option value=1>Admin</option>
-                        <option value=2 selected>Translator</option>
-                        @else
-                        <option value=1 selected>Admin</option>
-                        <option value=2>Translator</option>
-                        @endif
-                    </select>
+                    <input type="text" class="form-control @error('role') is-invalid
+                    @enderror" id="role" name="role" value="{{($user->role == 1) ? 'Admin' : 'Translator'}}" readonly>
                     @error('role')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
-            </div>
+            </div> --}}
 
             <hr>
             <div class="form-row">

@@ -16,9 +16,9 @@
     <blockquote class="blockquote">
         <p>Withdrawal Rules </p>
         <ul>
-            <li>Your previous balance withdrawal must be confirmed by admin</li>
-            <li>Your withdrawal time category must match your profile (weekly/monthly)</li>
-            <li>Chapters you've already worked on should still be open for payment by admin</li>
+            <li>Withdrawal time : Weekely (Every Friday) OR Monthly (Every 30)</li>
+            <li>Locked Balance : Balance that still locked by the admin</li>
+            <li>Withdrawable Balance : Balance that you can withdraw according to the rules </li>
         </ul>
         <p>Contact your admin for more information</p>
     </blockquote>

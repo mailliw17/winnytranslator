@@ -141,7 +141,7 @@
                             <a href="{{route('users.show', $user->id)}}" class="btn btn-sm btn-primary"><i
                                     class="bi bi-info-square"></i> Info</a>
 
-                            <a href="{{route('users.edit', $user->id)}}" class="btn btn-sm btn-warning"><i
+                            <a href="{{route('forgot-password', $user->id)}}" class="btn btn-sm btn-warning"><i
                                     class="bi bi-lock"> </i> Password</a>
                             @endif
 

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use App\Document;
 use App\DocumentChapter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DocumentController extends Controller
 {

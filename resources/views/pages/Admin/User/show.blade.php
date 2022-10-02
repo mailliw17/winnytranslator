@@ -17,10 +17,10 @@
                     </div>
                     <div class="card-body">
                         <div class="author">
-                            <a href="#">
+                            <p href="#">
                                 <img class="avatar border-gray" src="{{asset('/img/default-avatar.png')}}" alt="...">
-                                <h5 class="title">{{$user->name}}</h5>
-                            </a>
+                            <h5 class="title">{{$user->name}}</h5>
+                            </p>
                             <p class="description">
                                 {{$user->email}}
                             </p>

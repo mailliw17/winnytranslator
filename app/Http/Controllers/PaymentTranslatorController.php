@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\UserPayment;
 use Illuminate\Http\Request;
@@ -68,7 +68,7 @@ class PaymentTranslatorController extends Controller
                 $current_date = date('Y-m-d');
                 $day = Carbon::parse($current_date)->format('l'); //only show day output
 
-                if ($day == 'Wednesday') {
+                if ($day == 'Sunday') {
                     $payment_period = 1;
                 } else {
                     $payment_period = 0;

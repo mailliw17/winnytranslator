@@ -219,7 +219,7 @@
                                     {{-- IF DOC_CHAP FINISH TRANSLATED --}}
                                     @if ($dc->status == "10")
                                     <a href="{{route('documents-download.download', $dc->id)}}"
-                                        class="btn btn-sm btn-primary"><i class="bi bi-download"></i> Download</a>
+                                        class="btn btn-sm btn-success"><i class="bi bi-download"></i> Download</a>
                                     @endif
 
                                     @endif
@@ -236,7 +236,7 @@
                                         <input type="hidden" name="document_id" value="{{$dc->document_id}}">
                                         <input type="hidden" name="is_vendor_paid" value=1>
 
-                                        <button class="btn btn-sm btn-success"><i class="bi bi-wallet2"></i>
+                                        <button class="btn btn-sm btn-primary"><i class="bi bi-wallet2"></i>
                                             PAY</button>
                                     </form>
                                     @elseif(($dc->status == "10")&&($dc->is_vendor_paid == 1))

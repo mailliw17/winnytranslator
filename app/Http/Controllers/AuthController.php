@@ -79,11 +79,11 @@ class AuthController extends Controller
                     'id' => 'required',
                     'name' => 'required|max:255',
                     'username' => 'required|unique:users|min:3',
-                    'email' => 'required|email:dns',
+                    'email' => 'required|email:dns|unique:users',
                     'phone' => 'required',
                     'password' => 'required|min:3',
                     'role' => 'required',
-                    // for payment info
+                    // FOR PAYMENT INFO
                     'user_id' => 'required',
                     'payment_method' => 'required',
                     'account_info' => 'required',

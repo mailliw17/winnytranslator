@@ -27,7 +27,7 @@
                 @enderror
             </div>
             <hr>
-            <button type="submit" class="btn btn-block btn-sm btn-primary">Save</button>
+            <button type="submit" class="btn btn-block btn-success">Save</button>
         </form>
     </div>
 

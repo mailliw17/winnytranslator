@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,19 +20,7 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    // RESOURCE
-    Route::resource('withdraw', 'WithdrawController');
-    Route::resource('withdraw-translator', 'WithdrawTranslatorController');
-    Route::resource('task-chapters-translator', 'TaskChapterTranslatorController');
-    Route::resource('payment-translator', 'PaymentTranslatorController');
-    Route::resource('account-translator', 'AccountTranslatorController');
-    Route::resource('document-chapters', 'DocumentChapterController');
-    Route::resource('document-chapters-translator', 'DocumentChapterTranslatorController');
-    Route::resource('documents', 'DocumentController');
-    Route::resource('documents-download', 'DocumentDownloadController');
-    Route::resource('documents-translator', 'DocumentTranslatorController');
-    Route::resource('users', 'UserController');
-    Route::resource('payments', 'PaymentController');
+
 
     // GET
     Route::get('/register', 'AuthController@registerPage')->name('register');
@@ -50,7 +37,6 @@ Route::group(['middleware' => 'auth'], function () {
     // SPECIAL CASE
     Route::get('/home', 'AuthController@checkRedirect')->name('check-redirect');
 
-
     // PUT
     Route::put('/user/{id}/forgot-password', 'AuthController@updatePassword')->name('update-password');
     Route::put('/document-chapters/{id}/note', 'DocumentChapterController@updateNote')->name('document-chapters.note');
@@ -66,4 +52,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/register', 'AuthController@register');
     Route::post('/logout', 'AuthController@logout')->name('logout');
     Route::post('/document-chapters/check-title', 'DocumentChapterController@checkSameTitle')->name('document-chapters.check-same-title');
+
+    // RESOURCE
+    // THIS ROUTING SECTION MUST PLACED AT BOTTOM 
+    Route::resource('withdraw', 'WithdrawController');
+    Route::resource('withdraw-translator', 'WithdrawTranslatorController');
+    Route::resource('task-chapters-translator', 'TaskChapterTranslatorController');
+    Route::resource('payment-translator', 'PaymentTranslatorController');
+    Route::resource('account-translator', 'AccountTranslatorController');
+    Route::resource('document-chapters', 'DocumentChapterController');
+    Route::resource('document-chapters-translator', 'DocumentChapterTranslatorController');
+    Route::resource('documents', 'DocumentController');
+    Route::resource('documents-download', 'DocumentDownloadController');
+    Route::resource('documents-translator', 'DocumentTranslatorController');
+    Route::resource('users', 'UserController');
+    Route::resource('payments', 'PaymentController');
 });

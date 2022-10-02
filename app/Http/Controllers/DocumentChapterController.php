@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\DocumentChapter;
 use App\Document;
 use Illuminate\Http\Request;
@@ -22,6 +22,7 @@ class DocumentChapterController extends Controller
     public function manageChapters($id)
     {
         $role = auth()->user()->role;
+        // dd($role);
 
         // SECURE ADMIN ROUTING
         if ($role == 1) {
@@ -123,7 +124,7 @@ class DocumentChapterController extends Controller
 
         // SECURE ADMIN ROUTING
         if ($role == 1) {
-            // unchecked checkbox
+            // checked checkbox
             if ($request->post('is_not_same_title')) {
                 $validatedData = $request->validate([
                     'document_id' => 'required|int',
@@ -143,7 +144,7 @@ class DocumentChapterController extends Controller
                 // $request->session()->flash('success', 'Registration User Successfully');
                 return redirect()->route('document-chapters.manageChapters', $id_doc);
             } else {
-                // checked checkbox
+                // unchecked checkbox
                 $validatedData = $request->validate([
                     'document_id' => 'required|int',
                     'number_words' => 'required|int',

@@ -31,18 +31,18 @@
                             {{ $message }}
                         </div>
 
-                        <div class="alert alert-warning" role="alert">
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="is_not_same_title">
-                                    <label class="form-check-label" for="gridCheck">
-                                        Check this box if you have input the correct title
-                                    </label>
-                                </div>
+                        <div class="alert alert-warning">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="is_not_same_title"
+                                        id="is_not_same_title" value="">
+                                    <span class="form-check-sign">
+                                        <span class="check"> Check this box if you have input the correct title</span>
+                                    </span>
+                                </label>
                             </div>
                         </div>
                         @enderror
-
                     </div>
 
 
@@ -84,6 +84,7 @@
     crossorigin="anonymous"></script>
 
 <script>
+    // TO COUNT MANDARIN CHARACTER
     $(document).ready(function () {
     $("#ch_text").keyup(function () {
       var text = $(this).val();
@@ -95,6 +96,11 @@
       $("#number_words").attr("value", wordCount);
     });
   });
+
+  // TO ASSIGN VALUE WHEN CHECKBOX CHECKED
+  $("#is_not_same_title").change(function(){
+     $(this).val($(this).is("#is_not_same_title") ? 1 : 0);
+    });
 </script>
 
 @endsection

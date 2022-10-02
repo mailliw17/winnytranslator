@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\UserPayment;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -140,7 +140,6 @@ class UserController extends Controller
                 'username' => 'required|min:3',
                 'email' => 'required|email:dns',
                 'phone' => 'required',
-                'role' => 'required',
                 // for payment info
                 'user_id' => 'required',
                 'payment_method' => 'required',

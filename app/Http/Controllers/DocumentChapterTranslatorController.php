@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Document;
 use App\DocumentChapter;
 use Illuminate\Http\Request;
-use DB;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 class DocumentChapterTranslatorController extends Controller
 {

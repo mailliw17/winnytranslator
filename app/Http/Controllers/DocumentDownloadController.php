@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpWord\PhpWord;
 use Illuminate\Http\Request;
 
