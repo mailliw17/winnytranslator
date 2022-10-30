@@ -29,7 +29,7 @@
                     <td>{{$p->number_words_wd}}</td>
                     <td>
                         @if ($p->status == 10)
-                        <span class="badge badge-success">Paid on {{date('d-m-Y H:m',
+                        <span class="badge badge-success">Paid on {{date('d-m-Y H:i',
                             strtotime($p->paid_on))}}</span>
 
                         @else

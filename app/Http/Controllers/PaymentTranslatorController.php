@@ -68,7 +68,7 @@ class PaymentTranslatorController extends Controller
                 $current_date = date('Y-m-d');
                 $day = Carbon::parse($current_date)->format('l'); //only show day output
 
-                if ($day == 'Sunday') {
+                if ($day == 'Friday') {
                     $payment_period = 1;
                 } else {
                     $payment_period = 0;
